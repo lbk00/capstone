@@ -435,14 +435,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
@@ -452,14 +452,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
@@ -469,14 +469,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
@@ -486,14 +486,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
@@ -503,14 +503,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
@@ -520,14 +520,14 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
                             <CardMedia
                                 sx={{ height: 400 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
                             <Typography variant="body2" color="text.secondary">
                                 가격 : 10000원
                             </Typography>
