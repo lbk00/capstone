@@ -30,8 +30,8 @@ import {
     Divider, Drawer,
     FormControl,
     Grid,
-    Icon, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, OutlinedInput,
-    Pagination,
+    Icon, InputLabel, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, OutlinedInput,
+    Pagination, Select,
     ToggleButton, ToggleButtonGroup
 } from '@mui/material';
 
@@ -126,15 +126,21 @@ export default function App() {
         </Box>
     );
 
-    {/*상품 정렬 타입*/}
-    const [sortType, setSortType] = useState('popularity');
+    const [option1, setOption1] = React.useState('');
+    const [option2, setOption2] = React.useState('');
+    const [option3, setOption3] = React.useState('');
 
-    const handleSortTypeChange = (event, newSortType) => {
-        if (newSortType !== null) {
-            setSortType(newSortType);
-        }
+    const handleOption1Change = (event) => {
+        setOption1(event.target.value);
     };
 
+    const handleOption2Change = (event) => {
+        setOption2(event.target.value);
+    };
+
+    const handleOption3Change = (event) => {
+        setOption3(event.target.value);
+    };
 
     return (
         <div className="App">
@@ -201,17 +207,81 @@ export default function App() {
             </AppBar>
             <Divider />
             {/*상품 구매 항목*/}
-            <Grid item xs={12} sm={6} md={4}>
-                <Card>
-                    <CardContent>
-                        <CardMedia
-                            sx={{ height: 600 , width : 600 }}
-                            image={require("./sample/sample1.jpg")}
-                            title="sample1"
-                        />
-                    </CardContent>
-                </Card>
-
+            <Grid container spacing={2} justifyContent="center" alignItems="center">
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card>
+                        <CardContent>
+                            <CardMedia
+                                sx={{ height: 500, width: 400 }}
+                                image={require("./sample/sample1.jpg")}
+                                title="sample1"
+                            />
+                        </CardContent>
+                    </Card>
+                </Grid>
+                <Grid item xs={12} sm={6} md={4}>
+                    <Card>
+                        <CardContent>
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품이름
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary">
+                                ₩ 10000
+                            </Typography>
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="option1-label">선택</InputLabel>
+                                <Select
+                                    labelId="option1-label"
+                                    value={option1}
+                                    label="옵션1"
+                                    onChange={handleOption1Change}
+                                >
+                                    <MenuItem value={10}>옵션1-1</MenuItem>
+                                    <MenuItem value={20}>옵션1-2</MenuItem>
+                                    <MenuItem value={30}>옵션1-3</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="option2-label">색상</InputLabel>
+                                <Select
+                                    labelId="option2-label"
+                                    value={option2}
+                                    label="옵션2"
+                                    onChange={handleOption2Change}
+                                >
+                                    <MenuItem value={10}>옵션2-1</MenuItem>
+                                    <MenuItem value={20}>옵션2-2</MenuItem>
+                                    <MenuItem value={30}>옵션2-3</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <FormControl fullWidth sx={{ mt: 2 }}>
+                                <InputLabel id="option3-label">사이즈</InputLabel>
+                                <Select
+                                    labelId="option3-label"
+                                    value={option3}
+                                    label="옵션3"
+                                    onChange={handleOption3Change}
+                                >
+                                    <MenuItem value={10}>옵션3-1</MenuItem>
+                                    <MenuItem value={20}>옵션3-2</MenuItem>
+                                    <MenuItem value={30}>옵션3-3</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <Grid container spacing={2} sx={{ mt: 2 }}>
+                                <Grid item>
+                                    <Button variant="contained" color="primary">
+                                        구매하기
+                                    </Button>
+                                </Grid>
+                                <Grid item>
+                                    <Button variant="outlined" color="primary">
+                                        장바구니
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
+                    </Card>
+                </Grid>
             </Grid>
             {/*홈페이지의 최하단 네비게이션*/}
             <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black' ,height: 50}}>
