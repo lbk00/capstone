@@ -1,5 +1,3 @@
-// App.js
-
 
 import React, {useState} from 'react';
 import 'swiper/css';
@@ -156,166 +154,27 @@ export default function App() {
                 </Toolbar>
             </AppBar>
             <Divider />
-            {/*관리자용 메뉴 및 검색창*/}
-            <AppBar position="static" sx={{ bgcolor: 'white', color: 'black' }}>
+            {/*상품 목록 메뉴*/}
+            <AppBar position="static" sx={{ bgcolor: 'white', color: 'black'}}>
                 <Toolbar>
+                    <div>
+                        <Button sx={{ color: 'black' }} onClick={toggleDrawer(true)}>
+                            <MenuIcon/>
+                        </Button>
+                        <Drawer open={open} onClose={toggleDrawer(false)}>
+                            {DrawerList}
+                        </Drawer>
+                    </div>
 
-                    <Button
-                        id="basic-button1"
-                        aria-controls={openUser ? 'basic-menu1' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openUser ? 'true' : undefined}
-                        onClick={handleUserClick}
-                        sx={{
-                            width : 130,
-                            color: 'black',
-                            '&:hover': {
-                                color: 'red',
-                            },
-                        }}
-                    >
-                        사용자 목록
-                    </Button>
+                    <Button sx={{ width : 90, color: 'black' }}>바지</Button>
                     <Divider orientation="vertical" variant="middle" flexItem />
-                    <Menu
-                        id="basic-menu1"
-                        anchorEl={anchorElUser}
-                        open={openUser}
-                        onClose={handleCloseUser}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button1',
-                        }}
-                    >
-                        <MenuItem onClick={handleCloseUser}>사용자 등록</MenuItem>
-                        <MenuItem onClick={handleCloseUser}>사용자 수정</MenuItem>
-                        <MenuItem onClick={handleCloseUser}>사용자 삭제</MenuItem>
-                        <MenuItem onClick={handleCloseUser}>사용자 검색</MenuItem>
-                    </Menu>
-                    <Button
-                        id="basic-button2"
-                        aria-controls={openProduct ? 'basic-menu2' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openProduct ? 'true' : undefined}
-                        onClick={handleProductClick}
-                        sx={{
-                            width : 130,
-                            color: 'black',
-                            '&:hover': {
-                                color: 'red',
-                            },
-                        }}
-                    >
-                        상품 목록
-                    </Button>
+                    <Button sx={{ width : 90, color: 'black' }}>운동화</Button>
                     <Divider orientation="vertical" variant="middle" flexItem />
-                    <Menu
-                        id="basic-menu2"
-                        anchorEl={anchorElProduct}
-                        open={openProduct}
-                        onClose={handleCloseProduct}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button2',
-                        }}
-                    >
-                        <MenuItem onClick={handleCloseProduct}>상품 등록</MenuItem>
-                        <MenuItem onClick={handleCloseProduct}>상품 수정</MenuItem>
-                        <MenuItem onClick={handleCloseProduct}>상품 삭제</MenuItem>
-                        <MenuItem onClick={handleCloseProduct}>상품 검색</MenuItem>
-                    </Menu>
-                    <Button
-                        id="basic-button3"
-                        aria-controls={openOrdersheet ? 'basic-menu3' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openOrdersheet ? 'true' : undefined}
-                        onClick={handleOrdersheetClick}
-                        sx={{
-                            width : 130,
-                            color: 'black',
-                            '&:hover': {
-                                color: 'red',
-                            },
-                        }}
-                    >
-                        주문서 관리
-                    </Button>
+                    <Button sx={{ width : 90, color: 'black' }}>트레이닝복</Button>
                     <Divider orientation="vertical" variant="middle" flexItem />
-                    <Menu
-                        id="basic-menu3"
-                        anchorEl={anchorElOrdersheet}
-                        open={openOrdersheet}
-                        onClose={handleCloseOrdersheet}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button3',
-                        }}
-                    >
-                        <MenuItem onClick={handleCloseOrdersheet}>주문서 조회</MenuItem>
-                        <MenuItem onClick={handleCloseOrdersheet}>주문서 작성</MenuItem>
-                        <MenuItem onClick={handleCloseOrdersheet}>주문서 수정</MenuItem>
-                        <MenuItem onClick={handleCloseOrdersheet}>주문서 삭제</MenuItem>
-                    </Menu>
-                    <Button
-                        id="basic-button4"
-                        aria-controls={openInventory ? 'basic-menu4' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openInventory ? 'true' : undefined}
-                        onClick={handleInventoryClick}
-                        sx={{
-                            width : 130,
-                            color: 'black',
-                            '&:hover': {
-                                color: 'red',
-                            },
-                        }}
-                    >
-                        재고 관리
-                    </Button>
+                    <Button sx={{ width : 90, color: 'black' }}>티셔츠</Button>
                     <Divider orientation="vertical" variant="middle" flexItem />
-                    <Menu
-                        id="basic-menu4"
-                        anchorEl={anchorElInventory}
-                        open={openInventory}
-                        onClose={handleCloseInventory}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button4',
-                        }}
-                    >
-                        <MenuItem onClick={handleCloseInventory}>매진상품 예측</MenuItem>
-                        <MenuItem onClick={handleCloseInventory}>재고확인 및 수정</MenuItem>
-                        <MenuItem onClick={handleCloseInventory}>반품품목 확인</MenuItem>
-                        <MenuItem onClick={handleCloseInventory}>납품품목 확인</MenuItem>
-                    </Menu>
-                    <Button
-                        id="basic-button5"
-                        aria-controls={openSupplier ? 'basic-menu5' : undefined}
-                        aria-haspopup="true"
-                        aria-expanded={openSupplier ? 'true' : undefined}
-                        onClick={handleSupplierClick}
-                        sx={{
-                            width : 130,
-                            color: 'black',
-                            '&:hover': {
-                                color: 'red',
-                            },
-                        }}
-                    >
-                        공급업체 관리
-                    </Button>
-                    <Menu
-                        id="basic-menu5"
-                        anchorEl={anchorElSupplier}
-                        open={openSupplier}
-                        onClose={handleCloseSupplier}
-                        MenuListProps={{
-                            'aria-labelledby': 'basic-button5',
-                        }}
-                    >
-                        <MenuItem onClick={handleCloseSupplier}>공급업체 등록</MenuItem>
-                        <MenuItem onClick={handleCloseSupplier}>공급업체 조회</MenuItem>
-                        <MenuItem onClick={handleCloseSupplier}>공급업체 삭제</MenuItem>
-                        <MenuItem onClick={handleCloseSupplier}>공급업체 수정</MenuItem>
-                    </Menu>
-
-
+                    <Button sx={{ width : 90, color: 'black' }}>점퍼</Button>
                     <Box sx={{ flexGrow: 1 }} />
                     <form noValidate autoComplete="off">
                         <FormControl sx={{ width: '25ch', bgcolor: 'white' }} size="small">
@@ -338,30 +197,6 @@ export default function App() {
                             />
                         </FormControl>
                     </form>
-                </Toolbar>
-            </AppBar>
-            {/*상품 목록 메뉴*/}
-            <AppBar position="static" sx={{ bgcolor: 'white', color: 'black'}}>
-                <Toolbar>
-                    <div>
-                        <Button sx={{ color: 'black' }} onClick={toggleDrawer(true)}>
-                            <MenuIcon/>
-                        </Button>
-                        <Drawer open={open} onClose={toggleDrawer(false)}>
-                            {DrawerList}
-                        </Drawer>
-                    </div>
-
-                    <Button sx={{ width : 90, color: 'black' }}>바지</Button>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Button sx={{ width : 90, color: 'black' }}>운동화</Button>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Button sx={{ width : 90, color: 'black' }}>트레이닝복</Button>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Button sx={{ width : 90, color: 'black' }}>티셔츠</Button>
-                    <Divider orientation="vertical" variant="middle" flexItem />
-                    <Button sx={{ width : 90, color: 'black' }}>점퍼</Button>
-
                 </Toolbar>
             </AppBar>
             {/*임시 배너*/}
