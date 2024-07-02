@@ -1,15 +1,4 @@
-
-import React, {useState} from 'react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import { Navigation , Autoplay }from 'swiper/modules';
-import { Pagination as SwiperPagination } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
-import 'swiper/css/scrollbar';
-import './swiper.css';
+import React, { useState } from 'react';
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -18,27 +7,29 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-
-
-
 import {
-    Avatar, BottomNavigationAction,
-    Box, Breadcrumbs,
-    ButtonGroup,
+    Avatar,
+    Box,
     Card,
-    CardContent, CardMedia,
-    Divider, Drawer,
+    CardContent,
+    CardMedia,
+    Divider,
+    Drawer,
     FormControl,
-    Grid,
-    Icon, InputLabel, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, OutlinedInput,
-    Pagination, Select,
-    ToggleButton, ToggleButtonGroup
+    Grid, Icon,
+    InputLabel,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    OutlinedInput,
+    Select,
 } from '@mui/material';
 
-
-
 export default function App() {
-    {/*메뉴 이벤트 관리*/}
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [anchorElProduct, setAnchorElProduct] = useState(null);
     const [anchorElOrdersheet, setAnchorElOrdersheet] = useState(null);
@@ -91,7 +82,6 @@ export default function App() {
     const openInventory = Boolean(anchorElInventory);
     const openSupplier = Boolean(anchorElSupplier);
 
-    {/*상품 메뉴 옆 Drawer*/}
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -112,11 +102,11 @@ export default function App() {
             </List>
             <Divider />
             <List>
-                {['바지', '운동화', '트레이닝복', '티셔츠' , '점퍼'].map((text, index) => (
+                {['바지', '운동화', '트레이닝복', '티셔츠', '점퍼'].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemIcon>
-                                {index % 2 === 0 ? <MenuIcon /> : <MenuIcon />}
+                                <MenuIcon />
                             </ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItemButton>
@@ -144,9 +134,7 @@ export default function App() {
 
     return (
         <div className="App">
-            {/*최상단의 페이지 로고 및 프로필, 로그인 ,회원가입*/}
             <AppBar position="static" sx={{ bgcolor: 'white', color: 'black' }}>
-                {/*상단페이지*/}
                 <Toolbar>
                     <IconButton edge="start" color="inherit" aria-label="menu" sx={{ mr: 2 }}>
                         <Icon sx={{ mr: 1 }} />
@@ -160,7 +148,6 @@ export default function App() {
                 </Toolbar>
             </AppBar>
             <Divider />
-            {/*상품 목록 메뉴*/}
             <AppBar position="static" sx={{ bgcolor: 'white', color: 'black'}}>
                 <Toolbar>
                     <div>
@@ -206,13 +193,18 @@ export default function App() {
                 </Toolbar>
             </AppBar>
             <Divider />
-            {/*상품 구매 항목*/}
-            <Grid container spacing={2} justifyContent="center" alignItems="center">
+            {/*상품 상세 페이지*/}
+            <Grid container spacing={0} justifyContent="center" alignItems="center">
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
                             <CardMedia
-                                sx={{ height: 500, width: 400 }}
+                                sx={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    height: 500,
+                                    width: 500 }}
                                 image={require("./sample/sample1.jpg")}
                                 title="sample1"
                             />
@@ -221,7 +213,7 @@ export default function App() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
-                        <CardContent>
+                        <CardContent sx={{ height: 500, width: 500 }}>
                             <Typography gutterBottom variant="h5" component="div">
                                 상품이름
                             </Typography>
@@ -229,52 +221,141 @@ export default function App() {
                                 ₩ 10000
                             </Typography>
                             <FormControl fullWidth sx={{ mt: 2 }}>
-                                <InputLabel id="option1-label">선택</InputLabel>
+                                <InputLabel
+                                    id="option1-label"
+                                    sx={{
+                                        color: 'gray',
+                                        '&.Mui-focused': {
+                                            color: 'gray',
+                                        },
+                                    }}
+                                >
+                                    선택
+                                </InputLabel>
                                 <Select
                                     labelId="option1-label"
                                     value={option1}
                                     label="옵션1"
                                     onChange={handleOption1Change}
+                                    sx={{
+                                        '& .MuiSelect-select': {
+                                            color: 'gray',
+                                        },
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                    }}
                                 >
-                                    <MenuItem value={10}>옵션1-1</MenuItem>
-                                    <MenuItem value={20}>옵션1-2</MenuItem>
-                                    <MenuItem value={30}>옵션1-3</MenuItem>
+                                    <MenuItem value={10}>상품1</MenuItem>
+                                    <MenuItem value={20}>상품2</MenuItem>
+                                    <MenuItem value={30}>상품3</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth sx={{ mt: 2 }}>
-                                <InputLabel id="option2-label">색상</InputLabel>
+                                <InputLabel
+                                    id="option2-label"
+                                    sx={{
+                                        color: 'gray',
+                                        '&.Mui-focused': {
+                                            color: 'gray',
+                                        },
+                                    }}
+                                >
+                                    색상
+                                </InputLabel>
                                 <Select
                                     labelId="option2-label"
                                     value={option2}
                                     label="옵션2"
                                     onChange={handleOption2Change}
+                                    sx={{
+                                        '& .MuiSelect-select': {
+                                            color: 'gray',
+                                        },
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                    }}
                                 >
-                                    <MenuItem value={10}>옵션2-1</MenuItem>
-                                    <MenuItem value={20}>옵션2-2</MenuItem>
-                                    <MenuItem value={30}>옵션2-3</MenuItem>
+                                    <MenuItem value={10}>흰색</MenuItem>
+                                    <MenuItem value={20}>검정색</MenuItem>
+                                    <MenuItem value={30}>파랑색</MenuItem>
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth sx={{ mt: 2 }}>
-                                <InputLabel id="option3-label">사이즈</InputLabel>
+                                <InputLabel
+                                    id="option3-label"
+                                    sx={{
+                                        color: 'gray',
+                                        '&.Mui-focused': {
+                                            color: 'gray',
+                                        },
+                                    }}
+                                >
+                                    사이즈
+                                </InputLabel>
                                 <Select
                                     labelId="option3-label"
                                     value={option3}
                                     label="옵션3"
                                     onChange={handleOption3Change}
+                                    sx={{
+                                        '& .MuiSelect-select': {
+                                            color: 'gray',
+                                        },
+                                        '& .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&:hover .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray',
+                                        },
+                                    }}
                                 >
-                                    <MenuItem value={10}>옵션3-1</MenuItem>
-                                    <MenuItem value={20}>옵션3-2</MenuItem>
-                                    <MenuItem value={30}>옵션3-3</MenuItem>
+                                    <MenuItem value={10}>XL</MenuItem>
+                                    <MenuItem value={20}>L</MenuItem>
+                                    <MenuItem value={30}>M</MenuItem>
                                 </Select>
                             </FormControl>
                             <Grid container spacing={2} sx={{ mt: 2 }}>
                                 <Grid item>
-                                    <Button variant="contained" color="primary">
+                                    <Button
+                                        variant="contained"
+                                        sx={{
+                                            bgcolor: 'gray',
+                                            color: 'white',
+                                            '&:hover': { bgcolor: 'gray' },
+                                        }}
+                                    >
                                         구매하기
                                     </Button>
                                 </Grid>
                                 <Grid item>
-                                    <Button variant="outlined" color="primary">
+                                    <Button
+                                        variant="outlined"
+                                        sx={{
+                                            borderColor: 'gray',
+                                            color: 'gray',
+                                            '&:hover': {
+                                                borderColor: 'gray',
+                                                color: 'gray',
+                                            },
+                                        }}
+                                    >
                                         장바구니
                                     </Button>
                                 </Grid>
@@ -283,8 +364,7 @@ export default function App() {
                     </Card>
                 </Grid>
             </Grid>
-            {/*홈페이지의 최하단 네비게이션*/}
-            <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black' ,height: 50}}>
+            <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black', height: 50 }}>
                 <Toolbar></Toolbar>
             </AppBar>
         </div>

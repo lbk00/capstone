@@ -1,7 +1,5 @@
 
 import React, {useState} from 'react';
-import 'swiper/css';
-import 'swiper/css/navigation';
 import { Navigation , Autoplay }from 'swiper/modules';
 import { Pagination as SwiperPagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
