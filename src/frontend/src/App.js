@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import HomeAdmin from './components/HomeAdmin';
 import HomeUser from './components/HomeUser';
-import ItemDetail from './components/ItemPurchase';
+import ItemPurchase from './components/ItemPurchase';
 
 export default function App() {
     return (
@@ -9,10 +9,9 @@ export default function App() {
             <Routes>
                 <Route path="/home" element={<HomeAdmin />} />
                 <Route path="/homeuser" element={<HomeUser />} />
-                <Route path="/itemdetail" element={<ItemDetail />} />
+                <Route path="/itemdetail" element={<ItemPurchase />} />
             </Routes>
         </Router>
 
     )
 }
-git
