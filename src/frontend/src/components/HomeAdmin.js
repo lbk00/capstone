@@ -22,19 +22,34 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 
 import {
-    Avatar, BottomNavigationAction,
-    Box, Breadcrumbs,
+    Avatar,
+    BottomNavigationAction,
+    Box,
+    Breadcrumbs,
     ButtonGroup,
     Card,
-    CardContent, CardMedia,
-    Divider, Drawer,
+    CardContent,
+    CardMedia,
+    Divider,
+    Drawer,
     FormControl,
     Grid,
-    Icon, Link, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, OutlinedInput,
+    Icon,
+    InputAdornment,
+    Link,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
+    Menu,
+    MenuItem,
+    OutlinedInput,
     Pagination,
-    ToggleButton, ToggleButtonGroup
+    ToggleButton,
+    ToggleButtonGroup
 } from '@mui/material';
-
+import SearchIcon from '@mui/icons-material/Search';
 
 
 export default function App() {
@@ -343,7 +358,7 @@ export default function App() {
                                 sx={{
                                     '& .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'red',
-                                        borderWidth: '2px', // 테두리 두께를 1px로 고정
+                                        borderWidth: '2px',
                                     },
                                     '&:hover .MuiOutlinedInput-notchedOutline': {
                                         borderColor: 'red',
@@ -354,6 +369,13 @@ export default function App() {
                                         borderWidth: '2px',
                                     },
                                 }}
+                                endAdornment={
+                                    <InputAdornment position="end">
+                                        <IconButton edge="end">
+                                            <SearchIcon />
+                                        </IconButton>
+                                    </InputAdornment>
+                                }
                             />
                         </FormControl>
                     </form>
