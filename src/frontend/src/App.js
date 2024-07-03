@@ -9,7 +9,7 @@ export default function App() {
             <Routes>
                 <Route path="/home" element={<HomeAdmin />} />
                 <Route path="/homeuser" element={<HomeUser />} />
-                <Route path="/itemdetail" element={<ItemPurchase />} />
+                <Route path="/itempurchase" element={<ItemPurchase />} />
             </Routes>
         </Router>
 
