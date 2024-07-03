@@ -220,7 +220,7 @@ export default function App() {
                 </Grid>
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
-                        <CardContent sx={{ height: 500, width: 500 }}>
+                        <CardContent sx={{ height: 500, width: 400 }}>
                             <Typography gutterBottom variant="h5" component="div">
                                 상품이름
                             </Typography>
