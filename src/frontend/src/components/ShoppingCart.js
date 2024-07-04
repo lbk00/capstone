@@ -17,17 +17,14 @@ import {
     Drawer,
     FormControl, FormControlLabel,
     Grid, Icon, InputAdornment,
-    InputLabel,
     List,
     ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Menu,
-    MenuItem,
     OutlinedInput,
-    Select,
 } from '@mui/material';
+
 
 export default function App() {
 
@@ -69,18 +66,6 @@ export default function App() {
     const [option2, setOption2] = React.useState('');
     const [option3, setOption3] = React.useState('');
 
-    const handleOption1Change = (event) => {
-        setOption1(event.target.value);
-    };
-
-    const handleOption2Change = (event) => {
-        setOption2(event.target.value);
-    };
-
-    const handleOption3Change = (event) => {
-        setOption3(event.target.value);
-    };
-
     {/*장바구니 상품 체크박스*/}
     const [checked, setChecked] = React.useState([true, false]);
     const handleChange1 = (event) => {
@@ -94,17 +79,18 @@ export default function App() {
     };
     {/*각 상품의 체크박스*/}
     const children = (
-        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
-            <FormControlLabel
-                label="상품 1"
-                control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-            />
-            <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 4 }}>
+            {/*첫번째 상품 정보*/}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FormControlLabel
+                    label=""
+                    control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+                />
                 {/*상품 이미지*/}
                 <CardMedia
                     sx={{
-                        height: 300,
-                        width: 300,
+                        height: 200,
+                        width: 400,
                         marginRight: '20px'
                     }}
                     image={require("./sample/sample1.jpg")}
@@ -112,7 +98,7 @@ export default function App() {
                 />
                 <Divider orientation="vertical" variant="middle" flexItem />
                 {/*상품 이름 및 가격*/}
-                <CardContent sx={{ height: 300, width: 300, display: 'flex', flexDirection: 'column' }}>
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
                     <Typography gutterBottom variant="h5" component="div">
                         상품이름
                     </Typography>
@@ -121,12 +107,99 @@ export default function App() {
                     </Typography>
                 </CardContent>
                 <Divider orientation="vertical" variant="middle" flexItem />
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        색상 : 화이트
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        사이즈 : L
+                    </Typography>
+                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>주문수정</Button>
+                </CardContent>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        상품 금액
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        10000 원
+                    </Typography>
+                </CardContent>
             </div>
-            <FormControlLabel
-                label="상품 2"
-                control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-            />
+            <Divider/>
+            {/*두번째 상품 정보*/}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <FormControlLabel
+                    label=""
+                    control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+                />
+                {/*상품 이미지*/}
+                <CardMedia
+                    sx={{
+                        height: 200,
+                        width: 400,
+                        marginRight: '20px'
+                    }}
+                    image={require("./sample/sample1.jpg")}
+                    title="sample1"
+                />
+                <Divider orientation="vertical" variant="middle" flexItem />
+                {/*상품 이름 및 가격*/}
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        상품이름
+                    </Typography>
+                    <Typography variant="h6" color="text.secondary">
+                        ₩ 10000
+                    </Typography>
+                </CardContent>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        색상 : 화이트
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        사이즈 : L
+                    </Typography>
+                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>주문수정</Button>
+                </CardContent>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        상품 금액
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        10000 원
+                    </Typography>
+                </CardContent>
+            </div>
+            <Divider/>
+            {/*주문할 상품의 총 가격*/}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {/*상품 총 가격*/}
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        총 결제 금액
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        20000 원
+                    </Typography>
+                </CardContent>
+                <Divider orientation="vertical" variant="middle" flexItem />
+                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                    <Typography gutterBottom variant="h5" component="div">
+                        주문 금액
+                    </Typography>
+                    <Typography gutterBottom variant="h5" component="div">
+                        20000 원
+                    </Typography>
+                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>선택상품 주문</Button>
+                </CardContent>
+
+
+            </div>
         </Box>
+
     );
 
     return (
@@ -214,7 +287,7 @@ export default function App() {
                 </Grid>
             </Toolbar>
             </AppBar>
-            {/*장바구니*/}
+            {/*장바구니 정보*/}
             <Box
                 sx={{
                     display: 'flex',
@@ -226,7 +299,7 @@ export default function App() {
                 <Card sx={{ bgcolor: '#f0f0f0' }}>
                     <CardContent sx={{ height: 500, width: 1300 }}>
                         <Grid container>
-                            <Grid item xs={6}>
+                            <Grid item xs={12}>
                                 <div>
                                     <FormControlLabel
                                         label={
@@ -253,8 +326,8 @@ export default function App() {
                     </CardContent>
                 </Card>
             </Box>
-
-
+            {/*하단과 여백을 위해 생성한 Box*/}
+            <Box sx={{ bgcolor: '#ffffff' , height : 80 }}></Box>
             <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black', height: 50 }}>
                 <Toolbar></Toolbar>
             </AppBar>
