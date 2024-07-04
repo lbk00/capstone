@@ -3,6 +3,7 @@ import HomeAdmin from './components/HomeAdmin';
 import HomeUser from './components/HomeUser';
 import ItemPurchase from './components/ItemPurchase';
 import ShoppingCart from './components/ShoppingCart';
+import Dashboard from './components/admin/adminpage';
 export default function App() {
     return (
         <Router>
@@ -11,6 +12,7 @@ export default function App() {
                 <Route path="/homeuser" element={<HomeUser />} />
                 <Route path="/itempurchase" element={<ItemPurchase />} />
                 <Route path="/shoppingcart" element={<ShoppingCart />} />
+                <Route path="/dashboard" element={<Dashboard />} />
             </Routes>
         </Router>
 
