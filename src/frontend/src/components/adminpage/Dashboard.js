@@ -18,7 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems } from './listItems';
-import Chart from './Chart';
+
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Avatar from '@mui/material/Avatar';
@@ -184,7 +184,7 @@ export default function Dashboard() {
                     height: 240,
                   }}
                 >
-                  <Chart />
+
                 </Paper>
               </Grid>
               {/* Recent Deposits */}
