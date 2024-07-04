@@ -3,7 +3,7 @@ import HomeAdmin from './components/HomeAdmin';
 import HomeUser from './components/HomeUser';
 import ItemPurchase from './components/ItemPurchase';
 import ShoppingCart from './components/ShoppingCart';
-import Dashboard from './components/admin/adminpage';
+import Dashboard from './components/adminpage/adminpage';
 export default function App() {
     return (
         <Router>
