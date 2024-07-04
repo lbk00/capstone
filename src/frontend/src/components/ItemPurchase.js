@@ -200,6 +200,8 @@ export default function App() {
                 </Toolbar>
             </AppBar>
             <Divider />
+            {/*상단과 여백을 위해 생성한 Box*/}
+            <Box sx={{ bgcolor: '#ffffff' , height : 50 }}></Box>
             {/*상품 상세 페이지*/}
             <Grid container spacing={0} justifyContent="center" alignItems="center">
                 <Grid item xs={12} sm={6} md={4}>
@@ -371,6 +373,8 @@ export default function App() {
                     </Card>
                 </Grid>
             </Grid>
+            {/*하단과 여백을 위해 생성한 Box*/}
+            <Box sx={{ bgcolor: '#ffffff' , height : 80 }}></Box>
             <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black', height: 50 }}>
                 <Toolbar></Toolbar>
             </AppBar>
