@@ -1,7 +1,7 @@
-package com.example.capstone.Entity;
+// com.example.capstone.manager.Manager.java
+package com.example.capstone.Manager;
 
 import javax.persistence.*;
-import java.sql.Blob;
 import java.util.Date;
 
 @Entity
@@ -10,31 +10,33 @@ public class Manager {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private Long userId;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String mID;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String mPW;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String mName;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 1)
     private char mGender;
 
     @Column(nullable = false)
     private Date mbirthDate;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String mtel;
 
+    @Column(length = 20)
     private String mEmail;
 
-    private Blob mProfileImage;
+    @Lob
+    private byte[] mProfileImage;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 20)
     private String uAdr;
 
     // getters and setters
