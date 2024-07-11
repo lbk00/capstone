@@ -1,6 +1,7 @@
 package com.example.capstone.Supplier;
 
-import javax.persistence.*;
+
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "Supplier")

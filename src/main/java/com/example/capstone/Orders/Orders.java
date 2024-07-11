@@ -3,8 +3,8 @@ package com.example.capstone.Orders;
 import com.example.capstone.Product.Product;
 import com.example.capstone.Manager.Manager;
 import com.example.capstone.Supplier.Supplier;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 
 @Entity
 @Table(name = "Orders")

@@ -2,7 +2,8 @@
 package com.example.capstone.Product;
 
 import com.example.capstone.Manager.Manager;
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "Product")

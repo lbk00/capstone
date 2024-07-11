@@ -1,7 +1,8 @@
 // com.example.capstone.User.User.java
 package com.example.capstone.User;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity

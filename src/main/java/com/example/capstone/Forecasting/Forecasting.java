@@ -1,8 +1,9 @@
 package com.example.capstone.Forecasting;
 
-import com.example.capstone.Item.Item;
 
-import javax.persistence.*;
+import com.example.capstone.Product.Product;
+import jakarta.persistence.*;
+
 import java.util.Date;
 
 @Entity
@@ -12,7 +13,7 @@ public class Forecasting {
     @Id
     @ManyToOne
     @JoinColumn(name = "itemId", nullable = false)
-    private Item item;
+    private Product product;
 
     private String size;
 
