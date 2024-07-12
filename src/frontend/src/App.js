@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import HomeAdmin from './components/HomeAdmin';
+import HomeAdmin from './components/HomeManager';
 import HomeUser from './components/HomeUser';
 import ItemPurchase from './components/ItemPurchase';
 import ShoppingCart from './components/ShoppingCart';
