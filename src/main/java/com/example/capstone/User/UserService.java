@@ -1,16 +1,13 @@
-// com.example.capstone.User.UserService.java
 package com.example.capstone.User;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
+import java.util.Optional;
 
-@Service
-public class UserService {
+public interface UserService {
+    void saveUser(User user);
+    List<User> getAllUser(Long userId);
+    Optional<User> getUserById(Long userId);
+    void deleteUser(Long userId);
 
-    private final UserRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    // Business methods for User
 }
