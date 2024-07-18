@@ -2,14 +2,19 @@
 package com.example.capstone.User;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
+@Setter
+@Getter
 @Entity
 @Table(name = "User")
 public class User {
 
-    public User(String cID, String cPW, String cName, char cGender, Date cbirthDate, String ctel, String cEmail) {
+    public User(Long userId ,String cID, String cPW, String cName, char cGender, Date cbirthDate, String ctel, String cEmail) {
+        this.userId = userId;
         this.cID = cID;
         this.cPW = cPW;
         this.cName = cName;
@@ -46,70 +51,6 @@ public class User {
 
     public User() {
 
-    }
-
-    public Long getUserId() {
-        return userId;
-    }
-
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getcID() {
-        return cID;
-    }
-
-    public void setcID(String cID) {
-        this.cID = cID;
-    }
-
-    public String getcPW() {
-        return cPW;
-    }
-
-    public void setcPW(String cPW) {
-        this.cPW = cPW;
-    }
-
-    public String getcName() {
-        return cName;
-    }
-
-    public void setcName(String cName) {
-        this.cName = cName;
-    }
-
-    public char getcGender() {
-        return cGender;
-    }
-
-    public void setcGender(char cGender) {
-        this.cGender = cGender;
-    }
-
-    public Date getCbirthDate() {
-        return cbirthDate;
-    }
-
-    public void setCbirthDate(Date cbirthDate) {
-        this.cbirthDate = cbirthDate;
-    }
-
-    public String getCtel() {
-        return ctel;
-    }
-
-    public void setCtel(String ctel) {
-        this.ctel = ctel;
-    }
-
-    public String getcEmail() {
-        return cEmail;
-    }
-
-    public void setcEmail(String cEmail) {
-        this.cEmail = cEmail;
     }
 
     /*

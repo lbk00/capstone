@@ -5,20 +5,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.FluentQuery;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
-public class UserRepositotyImpl implements UserRepository{
-
-
-
-    @Override
-    public boolean existsById(Long aLong) {
-        return false;
-    }
-
+@Repository
+public class UserRepositoryImpl implements UserRepository{
     @Override
     public void flush() {
 
@@ -65,11 +59,6 @@ public class UserRepositotyImpl implements UserRepository{
     }
 
     @Override
-    public <S extends User> Optional<S> findOne(Example<S> example) {
-        return Optional.empty();
-    }
-
-    @Override
     public <S extends User> List<S> findAll(Example<S> example) {
         return List.of();
     }
@@ -80,38 +69,8 @@ public class UserRepositotyImpl implements UserRepository{
     }
 
     @Override
-    public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
-        return null;
-    }
-
-    @Override
-    public <S extends User> long count(Example<S> example) {
-        return 0;
-    }
-
-    @Override
-    public <S extends User> boolean exists(Example<S> example) {
-        return false;
-    }
-
-    @Override
-    public <S extends User, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
-        return null;
-    }
-
-    @Override
-    public <S extends User> S save(S entity) {
-        return null;
-    }
-
-    @Override
     public <S extends User> List<S> saveAll(Iterable<S> entities) {
         return List.of();
-    }
-
-    @Override
-    public Optional<User> findById(Long aLong) {
-        return Optional.empty();
     }
 
     @Override
@@ -122,6 +81,21 @@ public class UserRepositotyImpl implements UserRepository{
     @Override
     public List<User> findAllById(Iterable<Long> longs) {
         return List.of();
+    }
+
+    @Override
+    public <S extends User> S save(S entity) {
+        return null;
+    }
+
+    @Override
+    public Optional<User> findById(Long aLong) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(Long aLong) {
+        return false;
     }
 
     @Override
@@ -161,6 +135,31 @@ public class UserRepositotyImpl implements UserRepository{
 
     @Override
     public Page<User> findAll(Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public <S extends User> Optional<S> findOne(Example<S> example) {
+        return Optional.empty();
+    }
+
+    @Override
+    public <S extends User> Page<S> findAll(Example<S> example, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public <S extends User> long count(Example<S> example) {
+        return 0;
+    }
+
+    @Override
+    public <S extends User> boolean exists(Example<S> example) {
+        return false;
+    }
+
+    @Override
+    public <S extends User, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
         return null;
     }
 }
