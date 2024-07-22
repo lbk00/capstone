@@ -2,27 +2,19 @@
 package com.example.capstone.User;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Date;
 
-@Setter
-@Getter
+
 @Entity
-@Table(name = "User")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@Table(name = "Users")
 public class User {
 
-    public User(Long userId ,String cID, String cPW, String cName, char cGender, Date cbirthDate, String ctel, String cEmail) {
-        this.userId = userId;
-        this.cID = cID;
-        this.cPW = cPW;
-        this.cName = cName;
-        this.cGender = cGender;
-        this.cbirthDate = cbirthDate;
-        this.ctel = ctel;
-        this.cEmail = cEmail;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -41,7 +33,7 @@ public class User {
     private char cGender;
 
     @Column(nullable = false)
-    private Date cbirthDate;
+    private String cbirthDate;
 
     @Column(nullable = false, length = 20)
     private String ctel;
@@ -49,9 +41,6 @@ public class User {
     @Column(length = 20)
     private String cEmail;
 
-    public User() {
-
-    }
 
     /*
     @Lob

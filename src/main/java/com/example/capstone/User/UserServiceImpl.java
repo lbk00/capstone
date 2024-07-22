@@ -20,30 +20,27 @@ public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
 
     @Autowired
-    public UserServiceImpl(UserRepository repository) {
-        this.userRepository = repository;
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
-    //사용자 저장
+    /*
     @Override
-    public void saveUser(User user) {
+    public List<User> findUserByCName(String cName) {
+        return userRepository.findByCName(cName);
+    }
+    */
+
+
+
+    @Override
+    public void saveUser(User user){
         userRepository.save(user);
     }
 
-    //사용자 리스트 반환
     @Override
-    public List<User> getAllUser(){
-        return userRepository.findAll();
-    }
-    //사용자 조회
-    @Override
-    public Optional<User> getUserById(Long userId){
-        return userRepository.findById(userId);
-    }
-    //사용자 삭제
-    @Override
-    public void deleteUser(Long userId){
-        userRepository.deleteById(userId);
+    public void deleteUser(User user) {
+        userRepository.delete(user);
     }
 
     // Business methods for User
