@@ -15,16 +15,18 @@ import java.util.Optional;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
 
     // users/{id}
-    @GetMapping("{id}")
-    public String find(@PathVariable Long id) {
+    @GetMapping("test")
+    public String find() {
 
         //회원 목록
         //회원가입 페이지
@@ -39,7 +41,7 @@ public class UserController {
         // 사용자 저장
         userService.saveUser(user);
         System.out.println(user);
-        return "userfind";
+        return userRepository.findAll().toString();
     }
 
 
