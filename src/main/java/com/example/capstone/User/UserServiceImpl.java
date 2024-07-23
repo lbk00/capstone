@@ -24,13 +24,6 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
-    /*
-    @Override
-    public List<User> findUserByCName(String cName) {
-        return userRepository.findByCName(cName);
-    }
-    */
-
 
 
     @Override
@@ -41,6 +34,14 @@ public class UserServiceImpl implements UserService{
     @Override
     public void deleteUser(User user) {
         userRepository.delete(user);
+    }
+
+
+    //id로 user 조회
+    @Override
+    public User getUserById(long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        return optionalUser.orElse(null); // 없을 경우 null 반환
     }
 
     // Business methods for User
