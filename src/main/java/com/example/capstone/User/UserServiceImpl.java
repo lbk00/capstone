@@ -24,8 +24,7 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
-
-
+    //사용자 생성
     @Override
     public void saveUser(User user){
         userRepository.save(user);
@@ -36,12 +35,17 @@ public class UserServiceImpl implements UserService{
         userRepository.delete(user);
     }
 
-
     //id로 user 조회
     @Override
     public User getUserById(long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         return optionalUser.orElse(null); // 없을 경우 null 반환
+    }
+
+    //사용자 정보 수정
+    @Override
+    public void updateUser(User user) {
+
     }
 
     // Business methods for User

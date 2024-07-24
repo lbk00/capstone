@@ -3,11 +3,9 @@ package com.example.capstone.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.Optional;
 
 @RestController
@@ -23,24 +21,32 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    //회원 정보 조회
+    @GetMapping("{id}")
+    public String find(@PathVariable("id") long id) {
 
-    // users/{id}
-    @GetMapping("test")
-    public String find() {
+        return userService.getUserById(id).toString();
+    }
 
-        //회원 목록
-        //회원가입 페이지
-        //회원 상세정보
-        //로그인 페이지
+    //회원 목록
+    @GetMapping("list")
+    public String List() {
+        return userRepository.findAll().toString();
+    }
 
+    //회원가입 페이지
+    @PostMapping("register")
+    public String register() {
+        //리액트에서 입력받은 값으로 user 생성
         User user = User.builder().
                 cID("lbk").cPW("1234").cName("이본규").
-                cGender('M').cbirthDate("2000-03-18").
+                cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
 
         // 사용자 저장
         userService.saveUser(user);
-        System.out.println(user);
+
+        //회원가입 완료창 리턴
         return userRepository.findAll().toString();
     }
 

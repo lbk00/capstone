@@ -12,4 +12,5 @@ public interface UserService {
     void deleteUser(User user);
     //id로 user조회
     User getUserById(long id);
+    void updateUser(User user);
 }
