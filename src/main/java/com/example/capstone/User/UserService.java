@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 
-    void saveUser(User user);
+    void saveUser(UserDTO userDTO);
     void deleteUser(User user);
     //id로 user조회
     User getUserById(long id);

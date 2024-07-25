@@ -36,18 +36,20 @@ public class UserController {
 
     //회원가입 페이지
     @PostMapping("register")
-    public String register() {
+    public String register(@RequestBody UserDTO userDTO) {
         //리액트에서 입력받은 값으로 user 생성
+
+        /*
         User user = User.builder().
                 cID("lbk").cPW("1234").cName("이본규").
                 cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
-
+        */
         // 사용자 저장
-        userService.saveUser(user);
+        userService.saveUser(userDTO);
 
         //회원가입 완료창 리턴
-        return userRepository.findAll().toString();
+        return userService.getUserById(userDTO.getUserId()).toString();
     }
 
 
