@@ -2,8 +2,8 @@ package com.example.capstone.Forecasting;
 
 
 import com.example.capstone.Product.Product;
-import jakarta.persistence.*;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity

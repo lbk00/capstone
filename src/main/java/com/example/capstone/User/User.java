@@ -1,9 +1,10 @@
 // com.example.capstone.User.User.java
 package com.example.capstone.User;
 
-import jakarta.persistence.*;
+
 import lombok.*;
 
+import javax.persistence.*;
 import java.util.Date;
 
 
@@ -29,10 +30,10 @@ public class User {
     @Column(nullable = false, length = 20)
     private String cName;
 
-    @Column(nullable = false, length = 1)
+    @Column(nullable = true, length = 1)
     private char cGender;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private Date cbirthDate;
 
     @Column(nullable = false, length = 20)

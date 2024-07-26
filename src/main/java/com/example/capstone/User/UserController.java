@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 
     private final UserService userService;
@@ -45,8 +46,11 @@ public class UserController {
                 cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
         */
-        // 사용자 저장
+        System.out.println("사용자 DTO = "+ userDTO.getCName());
         userService.saveUser(userDTO);
+        // 사용자 저장
+
+
 
         //회원가입 완료창 리턴
         return userService.getUserById(userDTO.getUserId()).toString();

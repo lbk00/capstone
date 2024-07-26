@@ -2,7 +2,9 @@
 package com.example.capstone.Product;
 
 import com.example.capstone.Manager.Manager;
-import jakarta.persistence.*;
+
+
+import javax.persistence.*;
 
 
 @Entity

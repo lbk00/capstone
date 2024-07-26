@@ -35,15 +35,11 @@ public class UserServiceImpl implements UserService{
                 cGender(userDTO.getCGender()).cbirthDate(userDTO.getCbirthDate()).
                 ctel(userDTO.getCtel()).cEmail(userDTO.getCEmail()).build();
         */
-        User user = new User();
-        user.setCID(userDTO.getCID());
-        user.setCPW(userDTO.getCPW());
-        user.setCName(userDTO.getCName());
-        user.setCGender(userDTO.getCGender());
-        user.setCbirthDate(userDTO.getCbirthDate());
-        user.setCtel(userDTO.getCtel());
-        user.setCEmail(userDTO.getCEmail());
-        user.setUserId(userDTO.getUserId());
+
+        User user = User.builder().
+                cID(userDTO.getCID()).cPW(userDTO.getCPW()).cName(userDTO.getCName()).
+                cGender(userDTO.getCGender()).cbirthDate(userDTO.getCbirthDate()).
+                ctel(userDTO.getCtel()).cEmail(userDTO.getCEmail()).build();
         // 사용자 저장
         userRepository.save(user);
     }

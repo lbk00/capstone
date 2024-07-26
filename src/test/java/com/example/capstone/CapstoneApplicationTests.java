@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import java.util.Date;
 import java.util.List;
 
 @EnableWebMvc
@@ -32,7 +33,7 @@ class CapstoneApplicationTests {
         // 사용자 객체 생성
         User user = User.builder().
                 cID("lbk").cPW("1234").cName("이본규").
-                cGender('M').cbirthDate("2000-03-18").
+                cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
 
         // 사용자 저장
