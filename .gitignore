@@ -26,6 +26,11 @@ out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 
+<<<<<<< HEAD
+=======
+/node_modules
+
+>>>>>>> 730cab0242124aa05a4658cc8f0fcde6aba7201c
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
