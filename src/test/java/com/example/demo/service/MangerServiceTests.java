@@ -32,7 +32,7 @@ public class MangerServiceTests {
                     .mID("admin" + i)
                     .mPW("admin" + i)
                     .mName("admin" + i)
-                    .mGender('M')
+                    .mGender("남")
                     .mbirthDate(null)
                     .mtel("010-1234-567" + i)
                     .mEmail("eocndsjadjrk" + i + "@naver.com")

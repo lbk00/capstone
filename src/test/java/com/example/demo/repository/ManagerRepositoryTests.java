@@ -32,7 +32,7 @@ class ManagerRepositoryTests {
                 .mID("admin")
                 .mPW("admin")
                 .mName("admin")
-                .mGender('M')
+                .mGender("남")
                 .mbirthDate(null)
                 .mtel("010-1234-5678")
                 .mEmail("eocndsjadjrk@naver.com")

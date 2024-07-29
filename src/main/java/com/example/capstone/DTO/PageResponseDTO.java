@@ -1,5 +1,6 @@
 package com.example.capstone.DTO;
 
+import com.example.capstone.Manager.ManagerDTO;
 import lombok.Builder;
 import lombok.Data;
 
@@ -12,6 +13,8 @@ public class PageResponseDTO<E> {
 
     private List<E> dtoList;
 
+    private List<ManagerDTO> managerList;
+
     private List<Integer> pageNumList;
 
     private PageRequestDTO pageRequestDTO;
@@ -21,9 +24,10 @@ public class PageResponseDTO<E> {
     private int totalCount, prevPage, nextPage, totalPage, current;
 
     @Builder(builderMethodName = "withAll")
-    public PageResponseDTO(List<E> dtoList, PageRequestDTO pageRequestDTO, long total) {
+    public PageResponseDTO(List<E> dtoList, List<ManagerDTO> managerList, PageRequestDTO pageRequestDTO, long total) {
 
         this.dtoList = dtoList;
+        this.managerList = managerList;
         this.pageRequestDTO = pageRequestDTO;
         this.totalCount = (int) total;
         int start = Math.max(1, pageRequestDTO.getPage() - pageRequestDTO.getSize());
