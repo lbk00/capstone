@@ -2,11 +2,9 @@
 package com.example.capstone.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -31,29 +29,26 @@ public class UserController {
 
     //회원 목록
     @GetMapping("list")
-    public String List() {
-        return userRepository.findAll().toString();
+    public List<UserDTO> userLusts() {
+        return userService.findAll();
     }
 
     //회원가입 페이지
     @PostMapping("register")
-    public String register(@RequestBody UserDTO userDTO) {
+    public String register(@RequestBody User user) {
         //리액트에서 입력받은 값으로 user 생성
-
+        // userDTO -> user로 임시 수정
         /*
         User user = User.builder().
                 cID("lbk").cPW("1234").cName("이본규").
                 cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
         */
-        System.out.println("사용자 DTO = "+ userDTO.getCName());
-        userService.saveUser(userDTO);
+        System.out.println("사용자 DTO = "+ user.getCName());
+        userService.saveUser(user);
         // 사용자 저장
-
-
-
         //회원가입 완료창 리턴
-        return userService.getUserById(userDTO.getUserId()).toString();
+        return userService.getUserById(user.getUserId()).toString();
     }
 
 
