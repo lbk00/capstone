@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService{
         //userRepository.save();
     }
 
+    // 사용자 리스트 반환
     @Override
     public List<UserDTO> findAll() {
         List<User> users = userRepository.findAll();

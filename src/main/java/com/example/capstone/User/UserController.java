@@ -27,9 +27,9 @@ public class UserController {
         return userService.getUserById(id).toString();
     }
 
-    //회원 목록
+    //회원 목록 조회
     @GetMapping("list")
-    public List<UserDTO> userLusts() {
+    public List<UserDTO> userLists() {
         return userService.findAll();
     }
 
