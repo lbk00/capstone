@@ -47,5 +47,11 @@ public class UserDTO {
         return userDTO;
     }
 
+
+    //비밀번호가 같은지 비교해주는 메서드
+    public boolean checkPassword(String pw) {
+        return this.cPW.equals(pw);
+    }
+
     // getters and setters
 }

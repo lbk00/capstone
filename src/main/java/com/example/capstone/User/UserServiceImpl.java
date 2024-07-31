@@ -13,12 +13,28 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService{
 
+
     //jpaRepository 빈 등록
     private final UserRepository userRepository;
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+
+    //로그인
+    @Override
+    public UserDTO login(String uId, String uPw) {
+        List<User> finduser = userRepository.findByCID(uId);
+        Optional<UserDTO> user = Optional.of(UserDTO.toDto(finduser.get(0)));
+
+        String pw = user.get().getCPW();
+        //비밀번호가 같으면
+        if (user.get().checkPassword(uPw)) {
+            return user.get();
+        }
+        return null;
     }
 
     //사용자 생성

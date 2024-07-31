@@ -10,4 +10,5 @@ public interface UserService {
     User getUserById(long id);
     void updateUser(User user);
     List<UserDTO> findAll();
+    UserDTO login(String uId, String uPw);
 }

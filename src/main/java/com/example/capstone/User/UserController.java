@@ -2,6 +2,7 @@
 package com.example.capstone.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +20,16 @@ public class UserController {
         this.userService = userService;
         this.userRepository = userRepository;
     }
+
+    //로그인 페이지 api
+    @PostMapping("login")
+    public ResponseEntity<UserDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
+        // id와 pw가 기존에 있던값인지 검증 후 로그인
+        UserDTO userDTO = userService.login(userLoginDTO.getUID(), userLoginDTO.getUPW());
+        return ResponseEntity.ok(userDTO);
+    }
+
+
 
     //회원 정보 조회
     @GetMapping("{id}")

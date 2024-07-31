@@ -7,7 +7,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class UserListDto {
+public class UserListDTO {
 
     private List<User> users;
 
