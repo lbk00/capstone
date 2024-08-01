@@ -26,14 +26,18 @@ public class UserServiceImpl implements UserService{
     //로그인
     @Override
     public UserDTO login(String uId, String uPw) {
-        List<User> finduser = userRepository.findByCID(uId);
-        Optional<UserDTO> user = Optional.of(UserDTO.toDto(finduser.get(0)));
+        List<User> findUser = userRepository.findByCID(uId);
 
-        String pw = user.get().getCPW();
-        //비밀번호가 같으면
-        if (user.get().checkPassword(uPw)) {
-            return user.get();
+        // 사용자 목록이 비어 있는지 확인
+        if (findUser.isEmpty()) {
+            return null; // 또는 예외
         }
+        UserDTO userDTO = UserDTO.toDto(findUser.get(0));
+        // 비밀번호 검증
+        if (userDTO.checkPassword(uPw)) {
+            return userDTO;
+        }
+
         return null;
     }
 

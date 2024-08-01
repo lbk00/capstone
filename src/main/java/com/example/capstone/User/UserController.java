@@ -29,12 +29,9 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
-
-
     //회원 정보 조회
     @GetMapping("{id}")
     public String find(@PathVariable("id") long id) {
-
         return userService.getUserById(id).toString();
     }
 
