@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService{
         this.userRepository = userRepository;
     }
 
-
+    /*
     //로그인
     @Override
     public UserDTO login(String uId, String uPw) {
@@ -40,10 +40,10 @@ public class UserServiceImpl implements UserService{
 
         return null;
     }
-
+    */
     //사용자 생성
     @Override
-    public void saveUser(User user){
+    public UserDTO saveUser(User user){
 
         /*
         User user = User.builder().
@@ -52,12 +52,13 @@ public class UserServiceImpl implements UserService{
                 ctel(userDTO.getCtel()).cEmail(userDTO.getCEmail()).build();
         */
 
-        User createuser = User.builder().
-                cID(user.getCID()).cPW(user.getCPW()).cName(user.getCName()).
-                cGender(user.getCGender()).cbirthDate(user.getCbirthDate()).
-                ctel(user.getCtel()).cEmail(user.getCEmail()).build();
+        User createuser = new User(user.getCID() ,user.getCPW(), user.getCName(),
+                user.getCGender(),user.getCbirthDate(),
+                user.getCtel(),user.getCEmail());
         // 사용자 저장
         userRepository.save(createuser);
+
+        return UserDTO.toDto(createuser);
     }
 
     @Override

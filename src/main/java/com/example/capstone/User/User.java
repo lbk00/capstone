@@ -3,10 +3,7 @@ package com.example.capstone.User;
 
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.util.Date;
@@ -14,9 +11,9 @@ import java.util.Date;
 
 @Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@Getter
+@Setter
 @Table(name = "Users")
 public class User {
 
@@ -34,10 +31,10 @@ public class User {
     @Column(nullable = false, length = 20)
     private String cName;
 
-    @Column(nullable = true, length = 1)
+    @Column(nullable = false, length = 1)
     private char cGender;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private Date cbirthDate;
 
     @Column(nullable = false, length = 20)
@@ -45,6 +42,17 @@ public class User {
 
     @Column(length = 20)
     private String cEmail;
+
+    public User(String cID, String cPW, String cName, char cGender, Date cbirthDate, String ctel, String cEmail) {
+
+        this.cID = cID;
+        this.cPW = cPW;
+        this.cName = cName;
+        this.cGender = cGender;
+        this.cbirthDate = cbirthDate;
+        this.ctel = ctel;
+        this.cEmail = cEmail;
+    }
 
 
 

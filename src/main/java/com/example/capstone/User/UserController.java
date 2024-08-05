@@ -21,6 +21,7 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    /* // findbyCID 메서드 오류로 임시 주석처리
     //로그인 페이지 api
     @PostMapping("login")
     public ResponseEntity<UserDTO> login(@RequestBody UserLoginDTO userLoginDTO) {
@@ -28,7 +29,7 @@ public class UserController {
         UserDTO userDTO = userService.login(userLoginDTO.getUID(), userLoginDTO.getUPW());
         return ResponseEntity.ok(userDTO);
     }
-
+    */
     //회원 정보 조회
     @GetMapping("{id}")
     public String find(@PathVariable("id") long id) {
@@ -41,25 +42,26 @@ public class UserController {
         return userService.findAll();
     }
 
-    //회원가입 페이지
-    @PostMapping("register")
-    public String register(@RequestBody User user) {
+
+    //회원가입 페이지 api
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity<UserDTO> register(@RequestBody User user) {
         //리액트에서 입력받은 값으로 user 생성
-        // userDTO -> user로 임시 수정
+        // 사용자 생성
+        UserDTO userDTO = userService.saveUser(user);
+        // 사용자 저장
+        //회원가입 완료창 리턴
+        return ResponseEntity.ok(userDTO);
+    }
+
+
+    // userDTO -> user로 임시 수정
         /*
         User user = User.builder().
                 cID("lbk").cPW("1234").cName("이본규").
                 cGender('M').cbirthDate(new Date(2000,3,18)).
                 ctel("01030116661").cEmail("lbk11@gmail.com").build();
         */
-        System.out.println("사용자 DTO = "+ user.getCName());
-        userService.saveUser(user);
-        // 사용자 저장
-        //회원가입 완료창 리턴
-        return userService.getUserById(user.getUserId()).toString();
-    }
-
-
 
     // Endpoints for User
 }
