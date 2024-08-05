@@ -1,20 +1,30 @@
-package com.example.capstone.Orders;
+package com.example.capstone.Order;
 
-import com.example.capstone.Product.Product;
-import com.example.capstone.Manager.Manager;
-import com.example.capstone.Supplier.Supplier;
-
-import javax.persistence.*;
-
+import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
-@Table(name = "Orders")
-public class Orders {
+@Table(name = "orders")
+@Getter
+@Setter
+@NoArgsConstructor
+@ToString
+public class Order {
+
+
+    public Order(OrderRequestDTO orderRequestDTO) {
+        this.totalPrice = 10000;
+        this.state = "CREATED";
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long sn;
+    private Long id;
 
+    private Integer totalPrice;
+    private String state;
+
+    /* 임시 주석처리
     @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private Manager manager;
@@ -44,6 +54,7 @@ public class Orders {
 
     @Column(nullable = false)
     private int tag;
+    */
 
     // getters and setters
 }
