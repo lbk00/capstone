@@ -15,10 +15,12 @@ public class OrderServiceImpl {
     }
 
     // Business methods for Orders
+    //Response 주문서 생성 후 레포지토리에 저장
     public OrderResponseDTO createOrder(OrderRequestDTO orderRequestDTO) {
+        //requestDTO를 가지고 order 생성
         Order order = new Order(orderRequestDTO);
         ordersRepository.save(order);
-
+        // order를 가지고 responseDTO 생성 후 반환
         OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
         return orderResponseDTO;
     }
