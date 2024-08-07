@@ -2,14 +2,12 @@
 package com.example.capstone.Product;
 
 import com.example.capstone.Manager.Manager;
+import jakarta.persistence.*;
 
 
-import javax.persistence.*;
-
-
-@Entity
-@Table(name = "Product")
-public class Product {
+//@Entity
+//@Table(name = "Product")
+public class ProductA {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +29,11 @@ public class Product {
 
     @Column(nullable = false)
     private int quantity;
+
+
+    public void setId(Long id) {
+        this.itemId = id;
+    }
 
     // getters and setters
 }

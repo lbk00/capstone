@@ -1,6 +1,6 @@
 package com.example.capstone.Product;
 
-public class ProductDTO {
+public class ProductDTOA {
 
     private Long itemId;
     private Long userId;
