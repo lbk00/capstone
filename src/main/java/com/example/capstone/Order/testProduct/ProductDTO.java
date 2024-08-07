@@ -1,4 +1,4 @@
-package com.example.capstone.Order;
+package com.example.capstone.Order.testProduct;
 
 public class ProductDTO {
     private Long id;
@@ -29,7 +29,7 @@ public class ProductDTO {
         return amount;
     }
 
-    public static ProductDTO toDto(Product product) {
+    public static ProductDTO toDTO(Product product) {
         ProductDTO productDto = new ProductDTO(
                 product.getId(),
                 product.getName(),

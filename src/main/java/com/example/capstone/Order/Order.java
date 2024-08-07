@@ -1,28 +1,68 @@
 package com.example.capstone.Order;
 
+import com.example.capstone.Order.testProduct.Product;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
-@Getter
-@Setter
 @NoArgsConstructor
 @ToString
 public class Order {
-
-
-    public Order(OrderRequestDTO orderRequestDTO) {
-        this.totalPrice = 10000;
-        this.state = "CREATED";
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToMany
+    private List<Product> orderedProducts;
+
     private Integer totalPrice;
     private String state;
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Order(List<Product> orderedProducts) {
+        this.orderedProducts = orderedProducts;
+        this.totalPrice = calculateTotalPrice(orderedProducts);
+        this.state = "CREATED";
+    }
+
+
+    public Long getId() {
+        return id;
+    }
+
+    public List<Product> getOrderedProducts() {
+        return orderedProducts;
+    }
+
+    public Integer getTotalPrice() {
+        return totalPrice;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    private Integer calculateTotalPrice(List<Product> orderedProducts) {
+        return orderedProducts
+                .stream()
+                .mapToInt(orderedProduct -> orderedProduct.getPrice() *orderedProduct.getAmount())
+                .sum();
+    }
+
+    public Boolean sameId(Long id) {
+        return this.id.equals(id);
+    }
+    public void changeStateForce(String state) {
+        this.state = state;
+    }
 
     /* 임시 주석처리
     @ManyToOne

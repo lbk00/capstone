@@ -1,10 +1,19 @@
-package com.example.capstone.Order;
+package com.example.capstone.Order.testProduct;
 //임시 product (기존 product -> ProductA)
+
+import jakarta.persistence.*;
+import lombok.NoArgsConstructor;
 
 import java.util.Objects;
 
+
+@Entity
+@NoArgsConstructor
+@Table(name = "Product")
 public class Product {
+    @Id
     private Long id;
+
     private String name;
     private Integer price;
     private Integer amount;

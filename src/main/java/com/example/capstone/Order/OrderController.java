@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/orders")
 public class OrderController {
@@ -18,13 +20,15 @@ public class OrderController {
 
     //주문서 생성 api
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody OrderRequestDTO orderRequestDTO) {
-        //requestDTO로 데이터 입력받고, resoponseDTO에 저장
-        OrderResponseDTO orderResponseDTO = ordersService.createOrder(orderRequestDTO);
+    public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
+        //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성
+        OrderResponseDTO orderResponseDTO = ordersService.createOrder(orderProductRequestDtos);
         return ResponseEntity.ok(orderResponseDTO);
     }
 
     //주문서 목록 조회 api
+
+    //주문번호로 조회 api
 
     // Endpoints for Orders
 }
