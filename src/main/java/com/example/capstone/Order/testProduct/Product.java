@@ -2,6 +2,7 @@ package com.example.capstone.Order.testProduct;
 //임시 product (기존 product -> ProductA)
 
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.Objects;
@@ -9,6 +10,7 @@ import java.util.Objects;
 
 @Entity
 @NoArgsConstructor
+@Getter
 @Table(name = "Product")
 public class Product {
     @Id
@@ -23,22 +25,6 @@ public class Product {
         this.name = name;
         this.price = price;
         this.amount = amount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public Integer getAmount() {
-        return amount;
     }
 
     public Boolean sameId(Long id) {

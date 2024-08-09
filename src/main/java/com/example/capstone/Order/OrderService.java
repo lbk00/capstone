@@ -6,8 +6,8 @@ import java.util.List;
 
 public interface OrderService {
 
-    public OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos);
-    public List<Product> makeOrderedProducts(List<OrderProductRequestDTO> orderProductRequestDtos);
-    public void decreaseProductAmount(List<Product> orderedProducts);
+    OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos);
+    List<Product> makeOrderedProducts(List<OrderProductRequestDTO> orderProductRequestDtos);
+    void decreaseProductAmount(List<Product> orderedProducts);
 
 }

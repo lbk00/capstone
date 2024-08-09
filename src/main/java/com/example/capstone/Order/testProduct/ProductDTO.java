@@ -1,6 +1,10 @@
 package com.example.capstone.Order.testProduct;
 
+import lombok.Getter;
+
+@Getter
 public class ProductDTO {
+
     private Long id;
     private String name;
     private Integer price;
@@ -13,21 +17,6 @@ public class ProductDTO {
         this.amount = amount;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public Integer getPrice() {
-        return price;
-    }
-
-    public Integer getAmount() {
-        return amount;
-    }
 
     public static ProductDTO toDTO(Product product) {
         ProductDTO productDto = new ProductDTO(

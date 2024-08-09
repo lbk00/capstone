@@ -2,7 +2,9 @@ package com.example.capstone.Order;
 
 import com.example.capstone.Order.testProduct.Product;
 import jakarta.persistence.*;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
@@ -10,6 +12,8 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @NoArgsConstructor
+@Getter
+@Setter
 @ToString
 public class Order {
 
@@ -23,9 +27,6 @@ public class Order {
     private Integer totalPrice;
     private String state;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Order(List<Product> orderedProducts) {
         this.orderedProducts = orderedProducts;
@@ -33,22 +34,6 @@ public class Order {
         this.state = "CREATED";
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public List<Product> getOrderedProducts() {
-        return orderedProducts;
-    }
-
-    public Integer getTotalPrice() {
-        return totalPrice;
-    }
-
-    public String getState() {
-        return state;
-    }
 
     private Integer calculateTotalPrice(List<Product> orderedProducts) {
         return orderedProducts
