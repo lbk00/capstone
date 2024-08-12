@@ -1,9 +1,11 @@
 package com.example.capstone.Order.testProduct;
 //임시 product (기존 product -> ProductA)
 
+import com.example.capstone.Order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Objects;
 
@@ -11,14 +13,20 @@ import java.util.Objects;
 @Entity
 @NoArgsConstructor
 @Getter
+@Setter
 @Table(name = "Product")
 public class Product {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
     private Integer price;
     private Integer amount;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
     public Product(Long id, String name, Integer price, Integer amount) {
         this.id = id;

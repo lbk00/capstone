@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,8 +22,10 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
-    private List<Product> orderedProducts;
+    //mappedBy 주인 엔터티가 반대쪽인 many
+    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<Product> orderedProducts= new ArrayList<>();
+
 
     private Integer totalPrice;
     private String state;
@@ -33,6 +36,7 @@ public class Order {
         this.totalPrice = calculateTotalPrice(orderedProducts);
         this.state = "CREATED";
     }
+
 
 
     private Integer calculateTotalPrice(List<Product> orderedProducts) {
