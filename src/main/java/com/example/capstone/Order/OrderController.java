@@ -1,10 +1,7 @@
 package com.example.capstone.Order;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,11 +24,21 @@ public class OrderController {
         return ResponseEntity.ok(orderResponseDto);
     }
 
-
-
     //주문서 목록 조회 api
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public ResponseEntity<OrderListResponseDTO> orderList() {
+        OrderListResponseDTO orderListResponseDTO = ordersService.orderList();
+        return ResponseEntity.ok(orderListResponseDTO);
+    }
 
-    //주문번호로 조회 api
+    //주문서번호로 조회 api
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<OrderResponseDTO> orderDetail(@PathVariable("id") Long id) {
+        //주문서의 번호를 입력 받고, 해당 주문서의 정보를 출력
+        OrderResponseDTO orderResponseDto = ordersService.orderDetail(id);
+        return ResponseEntity.ok(orderResponseDto);
+    }
+
 
     // Endpoints for Orders
 }

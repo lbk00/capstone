@@ -6,9 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
+
 
     //jpa레포지토리 등록
     private final OrderRepository ordersRepository;
@@ -25,7 +27,6 @@ public class OrderServiceImpl implements OrderService {
 
     // Business methods for Orders
     //Response 주문서 생성 후 레포지토리에 저장
-
     @Override
     public OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos) {
         //리스트로 받은 상품들의 id를 조회하여 주문서 생성
@@ -38,7 +39,6 @@ public class OrderServiceImpl implements OrderService {
         OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
         return orderResponseDTO;
     }
-
 
 
     // 상품이 주문 수량만큼 재고가 있는지 확인
@@ -86,5 +86,19 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
+    @Override
+    public OrderResponseDTO orderDetail(Long id) {
+        Optional<Order> order = ordersRepository.findById(id);
+        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order.get());
+        return orderResponseDTO;
+    }
+
+    @Override
+    public OrderListResponseDTO orderList() {
+        List<Order> orderList = ordersRepository.findAll();
+        // 조회한 리스트들을 DTO 형태로 변경
+        OrderListResponseDTO orderListResponseDTO = OrderListResponseDTO.toDTO(orderList);
+        return orderListResponseDTO;
+    }
 
 }

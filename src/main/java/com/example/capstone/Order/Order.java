@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,8 +22,8 @@ public class Order {
     private Long id;
 
     //mappedBy 주인 엔터티가 반대쪽인 many
-    @OneToMany(mappedBy = "order", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<Product> orderedProducts= new ArrayList<>();
+    @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
+    private List<Product> orderedProducts;
 
 
     private Integer totalPrice;
