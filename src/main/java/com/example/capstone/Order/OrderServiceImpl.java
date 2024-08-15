@@ -123,4 +123,12 @@ public class OrderServiceImpl implements OrderService {
         return orderListResponseDTO;
 
     }
+
+    @Override
+    public void deleteOrder(Long id) {
+        // 해당 id의 주문서 삭제 , 없는번호면 오류발생
+        Order order = ordersRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 주문이 존재하지 않습니다: " + id));
+        ordersRepository.deleteById(id);
+    }
 }

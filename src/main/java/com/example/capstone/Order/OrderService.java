@@ -18,5 +18,7 @@ public interface OrderService {
     OrderListResponseDTO orderList();
     //특정 카테고리의 주문서를 조회하는 메서드
     OrderListResponseDTO orderCategory(Long id);
+    //주문서 삭제 메서드
+    void deleteOrder(Long id);
 
 }

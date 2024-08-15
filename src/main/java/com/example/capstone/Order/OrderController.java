@@ -1,5 +1,6 @@
 package com.example.capstone.Order;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +46,15 @@ public class OrderController {
         // 해당 카테고리에 속하는 주문서들만 조회
         OrderListResponseDTO orderListResponseDTO = ordersService.orderCategory(id);
         return ResponseEntity.ok(orderListResponseDTO);
+    }
 
+    //주문서 수정
+
+    //주문서 삭제
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<String> deleteOrder(@PathVariable("id") Long id) {
+        ordersService.deleteOrder(id);
+        return new ResponseEntity<>("Order deleted successfully", HttpStatus.OK);
     }
 
     // Endpoints for Orders
