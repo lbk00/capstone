@@ -17,6 +17,6 @@ public class OrderDTO {
     private Long id;
     private List<Product> orderedProducts;
     private Integer totalPrice;
-    private String state;
+    private OrderType orderType;
 
 }

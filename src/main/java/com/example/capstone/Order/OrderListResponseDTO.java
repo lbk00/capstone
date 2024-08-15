@@ -31,7 +31,7 @@ public class OrderListResponseDTO {
             orderDTO.setId(order.getId());
             orderDTO.setOrderedProducts(order.getOrderedProducts());
             orderDTO.setTotalPrice(order.getTotalPrice());
-            orderDTO.setState(order.getState());
+            orderDTO.setOrderType(order.getOrderType());
             orderDTOList.add(orderDTO);
         }
         // OrderListResponseDTO 객체 생성

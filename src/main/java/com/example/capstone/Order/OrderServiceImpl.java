@@ -42,7 +42,6 @@ public class OrderServiceImpl implements OrderService {
 
 
     // 상품이 주문 수량만큼 재고가 있는지 확인
-    //private -> public 임시 수정
     @Override
     public List<Product> makeOrderedProducts(List<OrderProductRequestDTO> orderProductRequestDtos) {
         return orderProductRequestDtos
@@ -67,7 +66,7 @@ public class OrderServiceImpl implements OrderService {
                     );
                 }).toList(); // 생성한 Product들로 리스트 생성
     }
-    //private -> public 임시 수정
+
     @Override
     public void decreaseProductAmount(List<Product> orderedProducts) {
         orderedProducts
@@ -101,4 +100,27 @@ public class OrderServiceImpl implements OrderService {
         return orderListResponseDTO;
     }
 
+
+    @Override
+    public OrderListResponseDTO orderCategory(Long id) {
+        //< 0 = 주문 전, 1 = 주문 중 , 2 = 납품(주문) 완료 , 3 = 반품 중 , 4 = 반품 완료 , 5 = 취소>
+        // id 값에따라 특정 카테고리의 리스트 반환
+        List<Order> list = null;
+        if (id == 0) {
+            list = ordersRepository.findByOrderType(OrderType.BEFORE_ORDER);
+        } else if (id == 1) {
+            list = ordersRepository.findByOrderType(OrderType.PROGRESS_ORDER);
+        } else if (id == 2) {
+            list = ordersRepository.findByOrderType(OrderType.COMPLETE_ORDER);
+        } else if (id == 3) {
+            list = ordersRepository.findByOrderType(OrderType.RETURNING);
+        } else if (id == 4) {
+            list = ordersRepository.findByOrderType(OrderType.COMPLETE_RETURN);
+        } else if (id == 5) {
+            list = ordersRepository.findByOrderType(OrderType.CANCELLED);
+        }
+        OrderListResponseDTO orderListResponseDTO = OrderListResponseDTO.toDTO(list);
+        return orderListResponseDTO;
+
+    }
 }

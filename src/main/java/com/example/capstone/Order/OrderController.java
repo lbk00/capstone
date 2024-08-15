@@ -39,6 +39,14 @@ public class OrderController {
         return ResponseEntity.ok(orderResponseDto);
     }
 
+    //특정 카테고리 주문서 정보 조회 api
+    @RequestMapping(value = "category/{id}", method = RequestMethod.GET)
+    public ResponseEntity<OrderListResponseDTO> orderCategory(@PathVariable("id") Long id) {
+        // 해당 카테고리에 속하는 주문서들만 조회
+        OrderListResponseDTO orderListResponseDTO = ordersService.orderCategory(id);
+        return ResponseEntity.ok(orderListResponseDTO);
+
+    }
 
     // Endpoints for Orders
 }

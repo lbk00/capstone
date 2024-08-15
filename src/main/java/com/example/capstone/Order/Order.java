@@ -27,13 +27,13 @@ public class Order {
 
 
     private Integer totalPrice;
-    private String state;
+    private OrderType orderType; //< 0 = 주문 전, 1 = 주문 중 , 2 = 납품(주문) 완료 , 3 = 반품 중 , 4 = 반품 완료 , 5 = 취소>
 
 
     public Order(List<Product> orderedProducts) {
         this.orderedProducts = orderedProducts;
         this.totalPrice = calculateTotalPrice(orderedProducts);
-        this.state = "CREATED";
+        this.orderType = OrderType.BEFORE_ORDER;
     }
 
 
@@ -48,8 +48,8 @@ public class Order {
     public Boolean sameId(Long id) {
         return this.id.equals(id);
     }
-    public void changeStateForce(String state) {
-        this.state = state;
+    public void changeStateForce(OrderType orderType) {
+        this.orderType = orderType;
     }
 
     /* 임시 주석처리

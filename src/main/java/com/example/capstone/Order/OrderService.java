@@ -16,5 +16,7 @@ public interface OrderService {
     OrderResponseDTO orderDetail(Long id);
     //주문서 목록 조회하는 메서드
     OrderListResponseDTO orderList();
+    //특정 카테고리의 주문서를 조회하는 메서드
+    OrderListResponseDTO orderCategory(Long id);
 
 }
