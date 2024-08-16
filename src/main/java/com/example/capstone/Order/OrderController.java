@@ -17,7 +17,6 @@ public class OrderController {
     }
 
     //주문서 생성 api
-
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
         //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성
@@ -36,8 +35,8 @@ public class OrderController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<OrderResponseDTO> orderDetail(@PathVariable("id") Long id) {
         //주문서의 번호를 입력 받고, 해당 주문서의 정보를 출력
-        OrderResponseDTO orderResponseDto = ordersService.orderDetail(id);
-        return ResponseEntity.ok(orderResponseDto);
+        OrderResponseDTO orderResponseDTO = ordersService.orderDetail(id);
+        return ResponseEntity.ok(orderResponseDTO);
     }
 
     //특정 카테고리 주문서 정보 조회 api
@@ -49,6 +48,18 @@ public class OrderController {
     }
 
     //주문서 수정
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<OrderResponseDTO> updateOrder(
+            @PathVariable("id") Long id,
+            @RequestBody OrderDTO orderDTO) {
+
+        OrderResponseDTO orderResponseDTO = ordersService.orderUpdate(id,orderDTO);
+        // 수정된 주문서 반환
+        // 현재 구현된 기능은 입력된 정보 그대로 수정됨
+        // -> 상품 id와 수량 입력후 , 해당 수량이 있는지 / 총 가격 계산하는 기능 추가해야함
+        return ResponseEntity.ok(orderResponseDTO);
+
+    }
 
     //주문서 삭제
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

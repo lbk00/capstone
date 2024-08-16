@@ -2,6 +2,7 @@ package com.example.capstone.Order;
 
 import com.example.capstone.Order.testProduct.Product;
 import com.example.capstone.Order.testProduct.ProductRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,14 +28,17 @@ public class OrderServiceImpl implements OrderService {
 
     // Business methods for Orders
     //Response 주문서 생성 후 레포지토리에 저장
+    @Transactional
     @Override
     public OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos) {
         //리스트로 받은 상품들의 id를 조회하여 주문서 생성
+
         List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
         decreaseProductAmount(orderedProducts);
         //requestDTO를 가지고 order 생성
         Order order = new Order(orderedProducts);
         ordersRepository.save(order);
+        System.out.println("order = " + order);
         // 주문서를 가지고 responseDTO 생성 후 반환
         OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
         return orderResponseDTO;
@@ -51,8 +55,6 @@ public class OrderServiceImpl implements OrderService {
                     Product product = productRepository.findById(productId)
                             .orElseThrow(() -> new RuntimeException("Product not found: " + productId));
 
-                    //Optional<Product> productOptional = productRepository.findById(productId);
-
                     Integer orderedAmount = orderProductRequestDto.getAmount();
                     product.checkEnoughAmount(orderedAmount);
                     // 재고가 충분한지 확인
@@ -62,7 +64,7 @@ public class OrderServiceImpl implements OrderService {
                             productId,
                             product.getName(),
                             product.getPrice(),
-                            orderProductRequestDto.getAmount()
+                            orderedAmount
                     );
                 }).toList(); // 생성한 Product들로 리스트 생성
     }
@@ -130,5 +132,19 @@ public class OrderServiceImpl implements OrderService {
         Order order = ordersRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 주문이 존재하지 않습니다: " + id));
         ordersRepository.deleteById(id);
+    }
+
+    @Override
+    public OrderResponseDTO orderUpdate(Long id, OrderDTO orderDTO) {
+        //수정할 주문서 조회
+        Order order = ordersRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("해당 ID의 주문이 존재하지 않습니다: " + id));
+        //정보 수정
+        order.setOrderedProducts(orderDTO.getOrderedProducts());
+        order.setTotalPrice(orderDTO.getTotalPrice());
+        order.setOrderType(orderDTO.getOrderType());
+        ordersRepository.save(order);
+        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
+        return orderResponseDTO;
     }
 }

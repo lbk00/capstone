@@ -20,5 +20,6 @@ public interface OrderService {
     OrderListResponseDTO orderCategory(Long id);
     //주문서 삭제 메서드
     void deleteOrder(Long id);
-
+    //주문서 수정 메서드
+    OrderResponseDTO orderUpdate(Long id,OrderDTO orderDTO);
 }

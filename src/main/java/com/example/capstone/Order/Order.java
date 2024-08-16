@@ -22,18 +22,30 @@ public class Order {
     private Long id;
 
     //mappedBy 주인 엔터티가 반대쪽인 many
-    @OneToMany(mappedBy = "order", cascade = CascadeType.MERGE)
+    //@OneToMany(mappedBy = "order", orphanRemoval = true)
+    @Lob
+    @Convert(converter = JsonArrayConverter.class) // json 형태로 상품 저장
     private List<Product> orderedProducts;
 
 
     private Integer totalPrice;
     private OrderType orderType; //< 0 = 주문 전, 1 = 주문 중 , 2 = 납품(주문) 완료 , 3 = 반품 중 , 4 = 반품 완료 , 5 = 취소>
 
-
+    // 총 수량
+    private Integer totalAmount;
+    
+    // 추가해야할 필드
+    // 공급업체 id , 관리자 id
+    
     public Order(List<Product> orderedProducts) {
         this.orderedProducts = orderedProducts;
         this.totalPrice = calculateTotalPrice(orderedProducts);
         this.orderType = OrderType.BEFORE_ORDER;
+        this.totalAmount = calculateTotalAmount();
+    }
+    // 주문 생성 시 총 수량 계산
+    public int calculateTotalAmount() {
+        return orderedProducts.stream().mapToInt(Product::getAmount).sum();
     }
 
 

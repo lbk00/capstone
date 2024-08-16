@@ -14,13 +14,15 @@ public class OrderResponseDTO {
     private List<ProductDTO> orderedProducts;
     private Integer totalPrice;
     private OrderType orderType;
+    private int totalAmount;
 
 
-    public OrderResponseDTO(Long id, List<ProductDTO> orderedProducts, Integer totalPrice, OrderType orderType) {
+    public OrderResponseDTO(Long id, List<ProductDTO> orderedProducts, Integer totalPrice, OrderType orderType , int totalAmount) {
         this.id = id;
         this.orderedProducts = orderedProducts;
         this.totalPrice = totalPrice;
         this.orderType = orderType;
+        this.totalAmount = totalAmount;
     }
 
 
@@ -35,7 +37,9 @@ public class OrderResponseDTO {
                 order.getId(),
                 orderedProductDtos,
                 order.getTotalPrice(),
-                order.getOrderType());
+                order.getOrderType(),
+                order.getTotalAmount()
+        );
 
         return orderResponseDto;
     }

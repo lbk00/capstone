@@ -24,7 +24,7 @@ public class Product {
     private Integer price;
     private Integer amount;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
 
