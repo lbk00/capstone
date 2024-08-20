@@ -48,11 +48,14 @@ public class OrderController {
     }
 
     //주문서 수정
+    // 상품번호와 해당 상품수량을 입력받고 주문서에 반영되도록
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public ResponseEntity<OrderResponseDTO> updateOrder(
             @PathVariable("id") Long id,
-            @RequestBody OrderDTO orderDTO) {
+            @RequestBody OrderDTO orderDTO) { // orderUpdateRequestDTO로 수정해야함
 
+        // 수정할 주문서 id / 상품 id 및 수량
+        // 여러개 상품 수정가능하므로 리스트로 입력 받아야함
         OrderResponseDTO orderResponseDTO = ordersService.orderUpdate(id,orderDTO);
         // 수정된 주문서 반환
         // 현재 구현된 기능은 입력된 정보 그대로 수정됨
