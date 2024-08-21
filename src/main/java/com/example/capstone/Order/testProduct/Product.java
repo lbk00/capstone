@@ -56,4 +56,10 @@ public class Product {
     public void decreaseAmount(Integer orderedAmount) {
         this.amount = this.amount - orderedAmount;
     }
+    // 재고 수량을 증가시키는 메서드
+    public void increaseAmount(Integer orderedAmount) {
+        this.amount = this.amount + orderedAmount;
+    }
+
+
 }

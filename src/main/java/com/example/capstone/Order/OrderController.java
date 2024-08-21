@@ -16,11 +16,27 @@ public class OrderController {
         this.ordersService = ordersService;
     }
 
+    //장바구니 생성 api ( 고객이 상품 구입시, db에 따로 저장 X )
+    @RequestMapping(value = "/purchase", method = RequestMethod.POST)
+    public ResponseEntity<OrderResponseDTO> purchase(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
+        //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성 (장바구니)
+        OrderResponseDTO orderResponseDto = ordersService.purchase(orderProductRequestDtos);
+        return ResponseEntity.ok(orderResponseDto);
+    }
+
     //주문서 생성 api
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     public ResponseEntity<OrderResponseDTO> createOrder(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
         //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성
         OrderResponseDTO orderResponseDto = ordersService.createOrder(orderProductRequestDtos);
+        return ResponseEntity.ok(orderResponseDto);
+    }
+
+    //납품확인 버튼 클릭 api ( 주문서 상태를 주문완료로 바꾸고 , 상품 수를 추가 )
+    @RequestMapping(value = "/complete/{id}", method = RequestMethod.GET)
+    public ResponseEntity<OrderResponseDTO> complete(@PathVariable("id") Long id) {
+        //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성
+        OrderResponseDTO orderResponseDto = ordersService.complete(id);
         return ResponseEntity.ok(orderResponseDto);
     }
 

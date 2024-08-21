@@ -30,15 +30,31 @@ public class OrderServiceImpl implements OrderService {
     //Response 주문서 생성 후 레포지토리에 저장
     @Transactional
     @Override
-    public OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos) {
+    public OrderResponseDTO purchase(List<OrderProductRequestDTO> orderProductRequestDtos) {
         //리스트로 받은 상품들의 id를 조회하여 주문서 생성
 
         List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
         decreaseProductAmount(orderedProducts);
         //requestDTO를 가지고 order 생성
+        // 장바구니이므로 db에 따로 저장 X
+        /*
+        ordersRepository.save(order);
+        */
+        // 주문서를 가지고 responseDTO 생성 후 반환
+        Order order = new Order(orderedProducts);
+        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
+        return orderResponseDTO;
+    }
+
+    // 주문서 상태가 주문완료 -> 상품 수량 추가
+    @Override
+    public OrderResponseDTO createOrder(List<OrderProductRequestDTO> orderProductRequestDtos) {
+        // 주문서에 있는 상품 수를 레포지토리에 추가
+        List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
+        //requestDTO를 가지고 order 생성
         Order order = new Order(orderedProducts);
         ordersRepository.save(order);
-        System.out.println("order = " + order);
+        //System.out.println("order = " + order);
         // 주문서를 가지고 responseDTO 생성 후 반환
         OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
         return orderResponseDTO;
@@ -84,6 +100,36 @@ public class OrderServiceImpl implements OrderService {
                     //엔티티가 데이터베이스에 이미 존재하면 업데이트하고, 존재하지 않으면 새로 삽입
                     productRepository.save(product);
                 });
+    }
+
+    @Override
+    public void increaseProductAmount(List<Product> orderedProducts) {
+        orderedProducts
+                .stream()
+                .forEach(orderedProduct -> {
+                    Long productId = orderedProduct.getId();
+                    Product product = productRepository.findById(productId)
+                            .orElseThrow(() -> new RuntimeException("Product not found: " + productId));
+
+                    Integer orderedAmount = orderedProduct.getAmount();
+                    product.increaseAmount(orderedAmount);
+
+                    //엔티티가 데이터베이스에 이미 존재하면 업데이트하고, 존재하지 않으면 새로 삽입
+                    productRepository.save(product);
+                });
+    }
+
+    @Override
+    public OrderResponseDTO complete(Long id) {
+        // 주문서 조회
+        Optional<Order> order = ordersRepository.findById(id);
+        // 주문서에 있는 상품 수량 , 재고에 추가
+        increaseProductAmount(order.get().getOrderedProducts());
+        // 주문서 상태 -> 주문완료로 변경
+        order.get().setOrderType(OrderType.COMPLETE_ORDER);
+        ordersRepository.save(order.get());
+        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order.get());
+        return orderResponseDTO;
     }
 
 
