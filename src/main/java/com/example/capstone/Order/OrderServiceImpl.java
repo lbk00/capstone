@@ -181,16 +181,40 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderResponseDTO orderUpdate(Long id, OrderDTO orderDTO) {
+    public OrderResponseDTO orderUpdate(Long id, OrderUpdateRequestDTO orderUpdateRequestDTO ) {
         //수정할 주문서 조회
         Order order = ordersRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 주문이 존재하지 않습니다: " + id));
-        //정보 수정
-        order.setOrderedProducts(orderDTO.getOrderedProducts());
-        order.setTotalPrice(orderDTO.getTotalPrice());
-        order.setOrderType(orderDTO.getOrderType());
-        ordersRepository.save(order);
-        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
-        return orderResponseDTO;
+        // 주문서 상태가 주문 전일때만 수정가능
+        if (order.getOrderType() == OrderType.BEFORE_ORDER) {
+            //정보 수정
+            //주문서에서 수정될 id만 찾아서 변경
+            // id 리스트 [] , 수량 리스트 []
+            // 1. 주문서에 있는 상품리스트에서 id리스트와 일치하는 상품을 찾기
+            // 2. 해당 상품리스트의 상품 수량을 변경
+            // 3. setOrderProducts 후 저장
+            //새로운 상품id가 추가될수는 없음 , 모든 상품중 일부만 수정될수 있음
+            // orderList를 만들고 setOrderedProducts에 넘겨줘야함
+            // OrderUpdateRequestDTO에서 상품 id를 하나씩 가져와서 주문서에 있는 orderedProducts를 수정
+            List orderList = order.getOrderedProducts();
+
+            orderUpdateRequestDTO.getId().stream()
+                            .forEach(pId -> {
+                                if (order.getOrderedProducts().contains(pId)) { // 주문서에 변경하려는 상품id가 존재
+                                    Integer p_index = order.getOrderedProducts().indexOf(pId); // 변경하려는 상품의 인덱스
+                                    Product product = (Product) orderList.get(p_index); // 상품 객체
+                                    product.setAmount(orderUpdateRequestDTO.getAmount().get(pId)); // 해당 상품의 수량 변경
+                                    orderList.set(p_index,product); // 변경내용 반영
+                                }
+                            });
+            order.setOrderedProducts(orderList);
+            ordersRepository.save(order);
+            OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
+            return orderResponseDTO;
+        } else {
+            new IllegalArgumentException("주문서 상태가 '주문 전'이 아닙니다.");
+            return null;
+        }
+
     }
 }
