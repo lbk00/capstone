@@ -207,7 +207,12 @@ public class OrderServiceImpl implements OrderService {
                                     orderList.set(p_index,product); // 변경내용 반영
                                 }
                             });
+            System.out.println("orderList = " + orderList);
+            //orderList Set 하는 부분 확인
+            // 현재는 입력값 , 수량이 적용되지않음
             order.setOrderedProducts(orderList);
+            System.out.println("order.getOrderedProducts() = " + order.getOrderedProducts());
+            System.out.println("order = " + order);
             ordersRepository.save(order);
             OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
             return orderResponseDTO;
