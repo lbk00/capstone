@@ -9,6 +9,6 @@ import java.util.List;
 @Getter
 public class OrderUpdateRequestDTO {
 
-    private List<Integer> id;
+    private List<Long> id;
     private List<Integer> amount;
 }

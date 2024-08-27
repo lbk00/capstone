@@ -198,21 +198,32 @@ public class OrderServiceImpl implements OrderService {
             // OrderUpdateRequestDTO에서 상품 id를 하나씩 가져와서 주문서에 있는 orderedProducts를 수정
             List orderList = order.getOrderedProducts();
 
-            orderUpdateRequestDTO.getId().stream()
-                            .forEach(pId -> {
-                                if (order.getOrderedProducts().contains(pId)) { // 주문서에 변경하려는 상품id가 존재
-                                    Integer p_index = order.getOrderedProducts().indexOf(pId); // 변경하려는 상품의 인덱스
-                                    Product product = (Product) orderList.get(p_index); // 상품 객체
-                                    product.setAmount(orderUpdateRequestDTO.getAmount().get(pId)); // 해당 상품의 수량 변경
-                                    orderList.set(p_index,product); // 변경내용 반영
-                                }
-                            });
-            System.out.println("orderList = " + orderList);
             //orderList Set 하는 부분 확인
             // 현재는 입력값 , 수량이 적용되지않음
+            orderUpdateRequestDTO.getId().stream()
+                            .forEach(pId -> {
+                                // if문 조건이 반영되지않고 있음
+                                //if (order.getOrderedProducts().contains(pId)) { // 주문서에 변경하려는 상품id가 존재
+                                // pid = 1 , p_index = -1
+                                System.out.println("pId = " + pId);
+                                    int p_index = -1;
+                                    for (int i = 0; i < order.getOrderedProducts().size(); i++) {
+                                        if (order.getOrderedProducts().get(i).getId().equals(pId)) {
+                                            p_index = i;
+                                            break;
+                                        }
+                                    } // 변경하려는 상품의 인덱스
+                                    System.out.println("p_index = " + p_index);
+                                    Product product = (Product) orderList.get(p_index); // 상품 객체
+                                    System.out.println("product.getAmount() = " + product.getAmount());
+                                    Integer pId_int = pId.intValue();
+                                    System.out.println("pId_int = " + pId_int);
+                                    product.setAmount(orderUpdateRequestDTO.getAmount().get(p_index)); // 해당 상품의 수량 변경
+                                    orderList.set(p_index,product); // 변경내용 반영
+                                    System.out.println("product.getAmount() = " + product.getAmount());
+                                //}
+                            });
             order.setOrderedProducts(orderList);
-            System.out.println("order.getOrderedProducts() = " + order.getOrderedProducts());
-            System.out.println("order = " + order);
             ordersRepository.save(order);
             OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
             return orderResponseDTO;
