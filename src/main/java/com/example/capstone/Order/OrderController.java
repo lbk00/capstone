@@ -76,6 +76,7 @@ public class OrderController {
         // 수정된 주문서 반환
         // 현재 구현된 기능은 입력된 정보 그대로 수정됨
         // -> 상품 id와 수량 입력후 , 해당 수량이 있는지 / 총 가격 계산하는 기능 추가해야함
+        System.out.println("orderResponseDTO_Controller = " + orderResponseDTO);
         return ResponseEntity.ok(orderResponseDTO);
 
     }

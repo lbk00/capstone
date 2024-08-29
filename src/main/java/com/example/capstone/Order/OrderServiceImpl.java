@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class OrderServiceImpl implements OrderService {
 
 
@@ -180,7 +181,9 @@ public class OrderServiceImpl implements OrderService {
         ordersRepository.deleteById(id);
     }
 
+
     @Override
+    @Transactional
     public OrderResponseDTO orderUpdate(Long id, OrderUpdateRequestDTO orderUpdateRequestDTO ) {
         //수정할 주문서 조회
         Order order = ordersRepository.findById(id)
@@ -200,11 +203,11 @@ public class OrderServiceImpl implements OrderService {
 
             //orderList Set 하는 부분 확인
             // 현재는 입력값 , 수량이 적용되지않음
-            orderUpdateRequestDTO.getId().stream()
+            orderUpdateRequestDTO.getId()
                             .forEach(pId -> {
-                                // if문 조건이 반영되지않고 있음
-                                //if (order.getOrderedProducts().contains(pId)) { // 주문서에 변경하려는 상품id가 존재
-                                // pid = 1 , p_index = -1
+                                boolean exists = order.getOrderedProducts().stream()
+                                        .anyMatch(product -> product.getId().equals(pId));
+                                if (exists) { // 주문서에 변경하려는 상품id가 존재한다면
                                 System.out.println("pId = " + pId);
                                     int p_index = -1;
                                     for (int i = 0; i < order.getOrderedProducts().size(); i++) {
@@ -213,15 +216,15 @@ public class OrderServiceImpl implements OrderService {
                                             break;
                                         }
                                     } // 변경하려는 상품의 인덱스
-                                    System.out.println("p_index = " + p_index);
+                                    //System.out.println("p_index = " + p_index);
                                     Product product = (Product) orderList.get(p_index); // 상품 객체
-                                    System.out.println("product.getAmount() = " + product.getAmount());
+                                    //System.out.println("product.getAmount() = " + product.getAmount());
                                     Integer pId_int = pId.intValue();
-                                    System.out.println("pId_int = " + pId_int);
+                                    //System.out.println("pId_int = " + pId_int);
                                     product.setAmount(orderUpdateRequestDTO.getAmount().get(p_index)); // 해당 상품의 수량 변경
                                     orderList.set(p_index,product); // 변경내용 반영
-                                    System.out.println("product.getAmount() = " + product.getAmount());
-                                //}
+                                    //System.out.println("product.getAmount() = " + product.getAmount());
+                                }
                             });
             order.setOrderedProducts(orderList);
             ordersRepository.save(order);
