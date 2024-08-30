@@ -55,7 +55,6 @@ public class OrderServiceImpl implements OrderService {
         //requestDTO를 가지고 order 생성
         Order order = new Order(orderedProducts);
         ordersRepository.save(order);
-        //System.out.println("order = " + order);
         // 주문서를 가지고 responseDTO 생성 후 반환
         OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
         return orderResponseDTO;
@@ -186,17 +185,17 @@ public class OrderServiceImpl implements OrderService {
     @Transactional
     public OrderResponseDTO orderUpdate(Long id, OrderUpdateRequestDTO orderUpdateRequestDTO ) {
         //수정할 주문서 조회
+
         Order order = ordersRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 ID의 주문이 존재하지 않습니다: " + id));
         // 주문서 상태가 주문 전일때만 수정가능
         if (order.getOrderType() == OrderType.BEFORE_ORDER) {
-            //정보 수정
             //주문서에서 수정될 id만 찾아서 변경
             // id 리스트 [] , 수량 리스트 []
             // 1. 주문서에 있는 상품리스트에서 id리스트와 일치하는 상품을 찾기
             // 2. 해당 상품리스트의 상품 수량을 변경
             // 3. setOrderProducts 후 저장
-            //새로운 상품id가 추가될수는 없음 , 모든 상품중 일부만 수정될수 있음
+            // 새로운 상품id가 추가될수는 없음 , 모든 상품중 일부만 수정될수 있음
             // orderList를 만들고 setOrderedProducts에 넘겨줘야함
             // OrderUpdateRequestDTO에서 상품 id를 하나씩 가져와서 주문서에 있는 orderedProducts를 수정
             List orderList = order.getOrderedProducts();
@@ -227,6 +226,12 @@ public class OrderServiceImpl implements OrderService {
                                 }
                             });
             order.setOrderedProducts(orderList);
+            // 수정된 객체
+            // json 객체만 변경 후 save 할시 DB에 반영안됨
+            order.changeOrderedProducts(order.getOrderedProducts());
+            order.changeTotalAmount(order.calculateTotalAmount());
+            order.changeTotalPrice(order.getTotalPrice());
+
             ordersRepository.save(order);
             OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
             return orderResponseDTO;
