@@ -215,14 +215,11 @@ public class OrderServiceImpl implements OrderService {
                                             break;
                                         }
                                     } // 변경하려는 상품의 인덱스
-                                    //System.out.println("p_index = " + p_index);
                                     Product product = (Product) orderList.get(p_index); // 상품 객체
-                                    //System.out.println("product.getAmount() = " + product.getAmount());
                                     Integer pId_int = pId.intValue();
-                                    //System.out.println("pId_int = " + pId_int);
                                     product.setAmount(orderUpdateRequestDTO.getAmount().get(p_index)); // 해당 상품의 수량 변경
                                     orderList.set(p_index,product); // 변경내용 반영
-                                    //System.out.println("product.getAmount() = " + product.getAmount());
+
                                 }
                             });
             order.setOrderedProducts(orderList);
