@@ -30,13 +30,13 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
     */
-    //회원 정보 조회
+    //회원 정보 조회 api
     @GetMapping("{id}")
     public String find(@PathVariable("id") long id) {
         return userService.getUserById(id).toString();
     }
 
-    //회원 목록 조회
+    //회원 목록 조회 api
     @GetMapping("list")
     public List<UserDTO> userLists() {
         return userService.findAll();

@@ -1,19 +1,14 @@
 package com.example.capstone.Forecasting;
 
 
-import com.example.capstone.Product.Product;
-
-import javax.persistence.*;
-import java.util.Date;
-
-@Entity
-@Table(name = "Forecasting")
+//@Entity
+//@Table(name = "Forecasting")
 public class Forecasting {
-
+    /*
     @Id
     @ManyToOne
     @JoinColumn(name = "itemId", nullable = false)
-    private Product product;
+    private ProductA productA;
 
     private String size;
 
@@ -27,4 +22,6 @@ public class Forecasting {
     private String itemType;
 
     // getters and setters
+    */
+
 }

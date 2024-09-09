@@ -63,7 +63,7 @@ public class OrderController {
         return ResponseEntity.ok(orderListResponseDTO);
     }
 
-    //주문서 수정
+    //주문서 수정 api
     // 상품번호와 해당 상품수량을 입력받고 주문서에 반영되도록
     // 주문서 상태가 '주문 전' 인 상태만 수정 가능
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
@@ -79,7 +79,7 @@ public class OrderController {
 
     }
 
-    //주문서 삭제
+    //주문서 삭제 api
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<String> deleteOrder(@PathVariable("id") Long id) {
         ordersService.deleteOrder(id);

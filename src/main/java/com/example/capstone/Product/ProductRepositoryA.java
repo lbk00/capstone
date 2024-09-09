@@ -4,5 +4,5 @@ package com.example.capstone.Product;
 import com.example.capstone.Order.testProduct.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProductRepository extends JpaRepository<Product, Long> {
+public interface ProductRepositoryA extends JpaRepository<Product, Long> {
 }
