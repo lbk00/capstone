@@ -50,6 +50,7 @@ import {
     ToggleButtonGroup
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { Link as RouterLink } from 'react-router-dom';
 
 
 export default function App() {
@@ -164,8 +165,28 @@ export default function App() {
                         메인페이지
                     </Typography>
                     <Avatar>Lee</Avatar>
-                    <Button color="inherit">Login</Button>
-                    <Button color="inherit">Sign up</Button>
+                    <Link
+                       component={RouterLink}
+                       to="/SignIn"
+                       underline="none"
+                       color="inherit"
+                       >
+                    <Button color="inherit">
+                       로그인
+                    </Button>
+                    </Link>
+
+                    <Link
+                          component={RouterLink}
+                          to="/SignUp"
+                          underline="none"
+                          color="inherit"
+                        >
+                        <Button color="inherit">
+                          회원가입
+                        </Button>
+                    </Link>
+
                 </Toolbar>
             </AppBar>
             <Divider />

@@ -45,6 +45,26 @@ class ManagerRepositoryTests {
         log.info(result);
     }
     @Test
+    public void testInsertMultiple() {
+        for (int i = 1; i <= 20; i++) {
+            Manager manager = Manager.builder()
+                    .mID("admin" + i)
+                    .mPW("password" + i)
+                    .mName("Manager " + i)
+                    .mGender(i % 2 == 0 ? "남" : "여")
+                    .mbirthDate(null)
+                    .mtel("010-1234-56" + (i < 10 ? "0" + i : i))
+                    .mEmail("manager" + i + "@example.com")
+                    .mProfileImage(null)
+                    .uAdr("서울시 강남구")
+                    .build();
+
+            Manager result = managerRepository.save(manager);
+
+            log.info(result);
+        }
+    }
+    @Test
     public void testRead() {
 
         Long  userId = 4L;

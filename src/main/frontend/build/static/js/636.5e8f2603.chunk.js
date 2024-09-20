@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[636],{3636:(e,t,d)=>{d.r(t),d.d(t,{default:()=>s});var n=d(3216),r=d(579);const s=e=>{let{userId:t}=e;(0,n.Zp)();return(0,r.jsx)("div",{className:"text-3xl font-extrabold",children:" Todo Modify Page "})}}}]);
+//# sourceMappingURL=636.5e8f2603.chunk.js.map

@@ -1,4 +1,6 @@
-import * as React from 'react';
+
+import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { styled, createTheme, ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import MuiDrawer from '@mui/material/Drawer';
@@ -18,10 +20,16 @@ import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { MainListItems } from './listItems';
+import { Routes, Route } from 'react-router-dom';
+import ListComponent from '../Manager/ListComponent';
+import ReadComponent from '../Manager/ReadComponent';
+import useCustomMove from '../../hooks/useCustomMove';
+
 
 import Deposits from './Deposits';
-import Orders from './Orders';
 import Avatar from '@mui/material/Avatar';
+import ManagerRead from '../Manager/ReadPage';
+import ManagerList from '../Manager/ListPage';
 
 
 function Copyright(props) {
@@ -96,11 +104,22 @@ const defaultTheme = createTheme();
 
 export default function Dashboard() {
   const [open, setOpen] = React.useState(true);
+  const [selectedUserId, setSelectedUserId] = useState(null);
+  const { moveToRead } = useCustomMove(); // useCustomMove 훅에서 moveToRead 함수를 가져옵니다.
+  const handleRowClick = (userId) => {
+      moveToRead(userId); // moveToRead 함수를 호출합니다.
+      console.log(selectedUserId);
+    };
+    const { userId } = useParams();
+
   const toggleDrawer = () => {
     setOpen(!open);
   };
 
   return (
+  <>
+
+
     <ThemeProvider theme={defaultTheme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
@@ -200,10 +219,11 @@ export default function Dashboard() {
                   <Deposits />
                 </Paper>
               </Grid>
-              {/* Recent Orders */}
+
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <Orders />
+                  <ListComponent onRowClick={handleRowClick} />
+
                 </Paper>
               </Grid>
             </Grid>
@@ -212,5 +232,6 @@ export default function Dashboard() {
         </Box>
       </Box>
     </ThemeProvider>
+    </>
   );
 }
