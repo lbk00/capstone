@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkfrontend=self.webpackChunkfrontend||[]).push([[665],{665:(e,d,t)=>{t.r(d),t.d(d,{default:()=>s});t(5043);var n=t(579);const s=()=>(0,n.jsx)("div",{className:"text-3xl font-extrabold",children:"Todo Add Page"})}}]);
+//# sourceMappingURL=665.7c7d0ba8.chunk.js.map
