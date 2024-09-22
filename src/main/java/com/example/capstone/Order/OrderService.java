@@ -1,6 +1,6 @@
 package com.example.capstone.Order;
 
-import com.example.capstone.Order.testProduct.Product;
+import com.example.capstone.Product.Product;
 
 import java.util.List;
 

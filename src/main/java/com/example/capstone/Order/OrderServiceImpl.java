@@ -1,7 +1,7 @@
 package com.example.capstone.Order;
 
-import com.example.capstone.Order.testProduct.Product;
-import com.example.capstone.Order.testProduct.ProductRepository;
+import com.example.capstone.Product.Product;
+import com.example.capstone.Product.ProductRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -77,10 +77,13 @@ public class OrderServiceImpl implements OrderService {
 
                     //조회 후 Product 생성
                     return new Product(
-                            productId,
                             product.getName(),
                             product.getPrice(),
-                            orderedAmount
+                            orderedAmount,
+                            product.getOrder(),
+                            product.getSize(),
+                            product.getItemType(),
+                            product.getItemImage()
                     );
                 }).toList(); // 생성한 Product들로 리스트 생성
     }

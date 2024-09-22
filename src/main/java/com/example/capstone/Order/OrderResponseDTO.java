@@ -2,7 +2,7 @@ package com.example.capstone.Order;
 
 //주문 응답 처리 DTO
 
-import com.example.capstone.Order.testProduct.ProductDTO;
+import com.example.capstone.Product.ProductDTO;
 import lombok.Getter;
 
 import java.util.List;

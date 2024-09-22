@@ -2,7 +2,6 @@ package com.example.capstone.Supplier;
 
 
 import com.example.capstone.DTO.PageRequestDTO;
-import com.example.capstone.DTO.ManagerResponseDTO;
 import com.example.capstone.DTO.SupplierResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

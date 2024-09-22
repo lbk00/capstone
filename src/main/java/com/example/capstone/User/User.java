@@ -3,8 +3,10 @@ package com.example.capstone.User;
 
 
 import jakarta.persistence.*;
-import lombok.*;
-
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Date;
 

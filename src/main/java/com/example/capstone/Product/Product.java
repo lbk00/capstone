@@ -1,5 +1,6 @@
-package com.example.capstone.Order.testProduct;
+package com.example.capstone.Product;
 //임시 product (기존 product -> ProductA)
+
 
 import com.example.capstone.Order.Order;
 import jakarta.persistence.*;
@@ -9,13 +10,25 @@ import lombok.Setter;
 
 import java.util.Objects;
 
-
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @Table(name = "Product")
 public class Product {
+
+    //itemImage byte[] -> String으로 변경
+    public Product(String name, Integer price, Integer amount, Order order, String size, String itemType, byte[] itemImage) {
+        //this.id = id;
+        this.name = name;
+        this.price = price;
+        this.amount = amount;
+        this.order = order;
+        this.size = size;
+        this.itemType = itemType;
+        this.itemImage = itemImage;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,14 +39,14 @@ public class Product {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Order order;// 주문서에 없는 상품은 null
 
-    public Product(Long id, String name, Integer price, Integer amount) {
-        this.id = id;
-        this.name = name;
-        this.price = price;
-        this.amount = amount;
-    }
+    private String size;
+
+    private String itemType;
+
+    @Lob
+    private byte[] itemImage;
 
     public Boolean sameId(Long id) {
         return this.id.equals(id);
