@@ -4,8 +4,6 @@ package com.example.capstone.Supplier;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Date;
-
 @Entity
 @Table(name = "Supplier")
 @Getter
