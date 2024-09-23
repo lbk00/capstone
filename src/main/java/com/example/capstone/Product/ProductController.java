@@ -41,7 +41,6 @@ public class ProductController {
         return new ResponseEntity<>("product deleted successfully", HttpStatus.OK);
     }
     //상품 목록 조회 api
-
     @RequestMapping(value = "/list",method = RequestMethod.GET)
     public ResponseEntity<ProductListResponseDTO> productList() {
         ProductListResponseDTO productListResponseDTO = productService.productList();
