@@ -1,5 +1,6 @@
 
-import React, {useState} from 'react';
+import React, { useEffect,useState} from 'react';
+import axios from "axios";
 import { Navigation , Autoplay }from 'swiper/modules';
 import { Pagination as SwiperPagination } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -8,6 +9,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import './swiper.css';
+import defaultImage from "./sample/sample1.jpg"; // 기본 이미지
+
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -48,8 +51,6 @@ import {
     ToggleButtonGroup
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
-
-
 
 export default function App() {
     {/*메뉴 이벤트 관리*/}
@@ -104,6 +105,42 @@ export default function App() {
     const openOrdersheet = Boolean(anchorElOrdersheet);
     const openInventory = Boolean(anchorElInventory);
     const openSupplier = Boolean(anchorElSupplier);
+
+
+    /* 백엔드에서 가져올 상품정보 */
+    // 상품 데이터를 저장할 state
+    const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
+    const productsPerPage = 6; // 페이지당 상품 수
+
+    // 데이터베이스에서 상품 데이터를 가져오는 함수
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                // 백엔드에서 상품 데이터를 가져옴 (API 엔드포인트 수정 필요)
+                const response = await axios.get("http://localhost:8080/products/list");
+                setProducts(response.data.products); // 응답에서 products 배열에 접근
+            } catch (error) {
+                console.error("Error fetching product data:", error);
+            }
+        };
+
+        fetchProducts(); // 컴포넌트가 마운트될 때 데이터 가져오기
+    }, []);
+
+    // 현재 페이지에 표시할 상품 계산
+    const indexOfLastProduct = currentPage * productsPerPage; // 현재 페이지의 마지막 상품 인덱스
+    const indexOfFirstProduct = indexOfLastProduct - productsPerPage; // 현재 페이지의 첫 번째 상품 인덱스
+    const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct); // 현재 페이지에서 보여줄 상품들
+
+    // 총 페이지 수 계산
+    const totalPages = Math.ceil(products.length / productsPerPage);
+
+    // 페이지 변경 함수
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value); // 페이지 번호 업데이트
+    };
+
 
     {/*상품 메뉴 옆 Drawer*/}
     const [open, setOpen] = React.useState(false);
@@ -290,113 +327,46 @@ export default function App() {
                 </ToggleButtonGroup>
             </Box>
             {/*하단의 상품 정렬 페이지*/}
-            <Grid container spacing={2} sx={{ padding: 2 }}>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
-                <Grid item xs={12} sm={6} md={4}>
-                    <Card>
-                        <CardContent>
-                            <CardMedia
-                                sx={{ height: 400 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
-                            />
-                            <Typography gutterBottom variant="h5" component="div">
-                                상품이름
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary">
-                                가격 : 10000원
-                            </Typography>
-                        </CardContent>
-                    </Card>
-                </Grid>
+            <Grid container spacing={2}>
+                {currentProducts.length === 0 ? (
+                    <Typography variant="h6" color="text.secondary">
+                        상품을 불러오는 중입니다...
+                    </Typography>
+                ) : (
+                    currentProducts.map((product) => (
+                        <Grid item xs={12} sm={6} md={4} key={product.id}>
+                            <Card>
+                                <CardContent>
+                                    <CardMedia
+                                        sx={{ height: 400 }}
+                                        image={
+                                            product.itemImage
+                                                ? `data:image/jpeg;base64,${product.itemImage}`
+                                                : defaultImage // 이미지가 없을 때 기본 이미지 경로
+                                        }
+                                        title={product.name}
+                                    />
+                                    <Typography gutterBottom variant="h5" component="div">
+                                        {product.name}
+                                    </Typography>
+                                    <Typography variant="body2" color="text.secondary">
+                                        가격: {product.price}원
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    ))
+                )}
             </Grid>
             {/*상품 이동 페이지네이션*/}
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
-                <Pagination count={10} />
+                <Pagination
+                    count={totalPages} // 총 페이지 수
+                    page={currentPage} // 현재 페이지
+                    onChange={handlePageChange} // 페이지 변경 함수
+                    variant="outlined" // 스타일 설정
+                    shape="rounded" // 모양 설정
+                />
             </Box>
             {/*홈페이지의 최하단 네비게이션*/}
             <BottomNavigationAction label="Recents" icon={<MenuIcon />} />
