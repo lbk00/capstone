@@ -149,7 +149,6 @@ export default function HomeUser() {
     };
 
 
-
     {/*상품 메뉴 옆 Drawer*/}
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = (newOpen) => () => {

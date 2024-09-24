@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+import axios from 'axios'
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -26,12 +28,24 @@ import {
 } from '@mui/material';
 
 
-export default function App() {
+export default function ShoppingCart() {
+
+    const location = useLocation();
+    const [cartItems, setCartItems] = useState([]);
+    const [selectedItems, setSelectedItems] = useState([]); // 선택된 항목들의 ID
+
 
     const [open, setOpen] = React.useState(false);
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
+
+    // location.state에서 새로 전달된 cartItem을 가져옴
+    useEffect(() => {
+        const storedCartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        setCartItems(storedCartItems);
+    }, []);  // 컴포넌트가 처음 렌더링될 때 한 번만 실행
+
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
@@ -61,146 +75,29 @@ export default function App() {
             </List>
         </Box>
     );
-
-    const [option1, setOption1] = React.useState('');
-    const [option2, setOption2] = React.useState('');
-    const [option3, setOption3] = React.useState('');
-
-    {/*장바구니 상품 체크박스*/}
-    const [checked, setChecked] = React.useState([true, false]);
-    const handleChange1 = (event) => {
-        setChecked([event.target.checked, event.target.checked]);
+    // 장바구니 초기화 함수
+    const handleClearCart = () => {
+        localStorage.removeItem('cartItems');  // 'cartItems' 키의 항목을 로컬 스토리지에서 삭제
+        setCartItems([]);  // 상태를 빈 배열로 설정하여 UI에서도 장바구니가 비워짐
     };
-    const handleChange2 = (event) => {
-        setChecked([event.target.checked, checked[1]]);
+    // 체크박스 변경 핸들러
+    const handleCheckboxChange = (productId) => {
+        setSelectedItems((prevSelectedItems) => {
+            if (prevSelectedItems.includes(productId)) {
+                return prevSelectedItems.filter((id) => id !== productId);
+            } else {
+                return [...prevSelectedItems, productId];
+            }
+        });
     };
-    const handleChange3 = (event) => {
-        setChecked([checked[0], event.target.checked]);
+    // 선택된 항목 삭제
+    const handleDeleteSelected = () => {
+        const updatedCartItems = cartItems.filter((product) => !selectedItems.includes(product.id));
+        setCartItems(updatedCartItems);
+        setSelectedItems([]); // 선택 항목 초기화
+        localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // 로컬 스토리지 업데이트
     };
-    {/*각 상품의 체크박스*/}
-    const children = (
-        <Box sx={{ display: 'flex', flexDirection: 'column', ml: 4 }}>
-            {/*첫번째 상품 정보*/}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <FormControlLabel
-                    label=""
-                    control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
-                />
-                {/*상품 이미지*/}
-                <CardMedia
-                    sx={{
-                        height: 200,
-                        width: 400,
-                        marginRight: '20px'
-                    }}
-                    image={require("./sample/sample1.jpg")}
-                    title="sample1"
-                />
-                <Divider orientation="vertical" variant="middle" flexItem />
-                {/*상품 이름 및 가격*/}
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        상품이름
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        ₩ 10000
-                    </Typography>
-                </CardContent>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        색상 : 화이트
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        사이즈 : L
-                    </Typography>
-                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>주문수정</Button>
-                </CardContent>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        상품 금액
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        10000 원
-                    </Typography>
-                </CardContent>
-            </div>
-            <Divider/>
-            {/*두번째 상품 정보*/}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <FormControlLabel
-                    label=""
-                    control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
-                />
-                {/*상품 이미지*/}
-                <CardMedia
-                    sx={{
-                        height: 200,
-                        width: 400,
-                        marginRight: '20px'
-                    }}
-                    image={require("./sample/sample1.jpg")}
-                    title="sample1"
-                />
-                <Divider orientation="vertical" variant="middle" flexItem />
-                {/*상품 이름 및 가격*/}
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        상품이름
-                    </Typography>
-                    <Typography variant="h6" color="text.secondary">
-                        ₩ 10000
-                    </Typography>
-                </CardContent>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        색상 : 화이트
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        사이즈 : L
-                    </Typography>
-                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>주문수정</Button>
-                </CardContent>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        상품 금액
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        10000 원
-                    </Typography>
-                </CardContent>
-            </div>
-            <Divider/>
-            {/*주문할 상품의 총 가격*/}
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {/*상품 총 가격*/}
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        총 결제 금액
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        20000 원
-                    </Typography>
-                </CardContent>
-                <Divider orientation="vertical" variant="middle" flexItem />
-                <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
-                    <Typography gutterBottom variant="h5" component="div">
-                        주문 금액
-                    </Typography>
-                    <Typography gutterBottom variant="h5" component="div">
-                        20000 원
-                    </Typography>
-                    <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>선택상품 주문</Button>
-                </CardContent>
 
-
-            </div>
-        </Box>
-
-    );
 
     return (
         <div className="App">
@@ -287,44 +184,86 @@ export default function App() {
                 </Grid>
             </Toolbar>
             </AppBar>
+
             {/*장바구니 정보*/}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    height: '100vh',
-                    bgcolor: '#ffffff',
-                }}
-            >
-                <Card sx={{ bgcolor: '#f0f0f0' }}>
-                    <CardContent sx={{ height: 500, width: 1300 }}>
-                        <Grid container>
-                            <Grid item xs={12}>
-                                <div>
-                                    <FormControlLabel
-                                        label={
-                                            <Typography variant="h5">
-                                                전체선택
-                                            </Typography>
-                                        }
-                                        control={
-                                            <Checkbox
-                                                checked={checked[0] && checked[1]}
-                                                indeterminate={checked[0] !== checked[1]}
-                                                onChange={handleChange1}
-                                            />
-                                        }
-                                    />
+            <Box>
+                {/* 여러 상품 렌더링 */}
+                {cartItems.map((product, index) => (
+                    <Box key={index} sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+                        {/* 체크박스 */}
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={selectedItems.includes(product.id)}
+                                    onChange={() => handleCheckboxChange(product.id)}
+                                />
+                            }
+                            label=""
+                        />
+                        {/* 상품 이미지 */}
+                        <CardMedia
+                            sx={{ height: 200, width: 400, marginRight: '20px' }}
+                            image={product.itemImage ? `data:image/jpeg;base64,${product.itemImage}` : require("./sample/sample1.jpg")}
+                            title={product.name}
+                        />
+                        <Divider orientation="vertical" variant="middle" flexItem />
+                        {/* 상품 이름 및 가격 */}
+                        <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                            <Typography gutterBottom variant="h5" component="div">
+                                {product.name}
+                            </Typography>
+                            <Typography variant="h6" color="text.secondary">
+                                ₩ {product.price.toLocaleString()}원
+                            </Typography>
+                        </CardContent>
+                        <Divider orientation="vertical" variant="middle" flexItem />
 
-                                    <Divider sx={{ borderBottomWidth: 3 , width: 1300}}/>
-                                    {children}
-                                </div>
-                            </Grid>
-                        </Grid>
-                        <Divider />
-
-                    </CardContent>
-                </Card>
+                        {/* 색상 및 사이즈 */}
+                        <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                            <Typography gutterBottom variant="h5" component="div">
+                                색상: 화이트
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="div">
+                                사이즈: {product.size}
+                            </Typography>
+                            <Button sx={{ backgroundColor: 'darkgray', color: 'black', '&:hover': { backgroundColor: 'darkgrey' } }}>
+                                주문수정
+                            </Button>
+                        </CardContent>
+                        <Divider orientation="vertical" variant="middle" flexItem />
+                        {/* 상품 금액 */}
+                        <CardContent sx={{ height: 200, width: 400, display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start' }}>
+                            <Typography gutterBottom variant="h5" component="div">
+                                상품 금액
+                            </Typography>
+                            <Typography gutterBottom variant="h5" component="div">
+                                ₩ {product.price.toLocaleString()} 원
+                            </Typography>
+                        </CardContent>
+                    </Box>
+                ))}
+            </Box>
+            <Box sx={{ display: 'flex', justifyContent: 'center',gap: 2, mb: 2 }}>
+                <Button
+                    variant="contained"
+                    sx={{
+                        bgcolor: 'gray',
+                        color: 'white',
+                        '&:hover': { bgcolor: 'gray' },
+                    }}
+                    onClick={handleClearCart} // 상품 모두 삭제
+                >모두 삭제</Button>
+                {/* 선택된 항목 삭제 버튼 */}
+                <Button
+                    variant="contained"
+                    sx={{
+                        bgcolor: 'gray',
+                        color: 'white',
+                        '&:hover': { bgcolor: 'gray' },
+                    }}
+                    onClick={handleDeleteSelected}>
+                    선택된 항목 삭제
+                </Button>
             </Box>
             {/*하단과 여백을 위해 생성한 Box*/}
             <Box sx={{ bgcolor: '#ffffff' , height : 80 }}></Box>

@@ -34,7 +34,7 @@ const root = createBrowserRouter([
       element: <Suspense fallback={Loading}><MainUser/></Suspense>
   },
   {
-      path: "itempurchase",
+      path: "/itempurchase/:productId",
       element: <Suspense fallback={Loading}><ItemPurchase/></Suspense>
   },
   {

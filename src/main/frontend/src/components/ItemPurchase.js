@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 
 import AppBar from '@mui/material/AppBar';
@@ -108,7 +109,27 @@ export default function ItemPurchase() {
         fetchProduct();
     }, [productId]); // productId가 변경될 때마다 데이터를 가져온다
 
-
+    // 장바구니 페이지로 상품 ID 전송
+    const navigate = useNavigate();
+    const handleAddToCart = () => {
+        // 장바구니 페이지로 product를 배열로 전달
+        const cartItem = {
+            id: product.id,
+            name: product.name,
+            price: product.price,
+            size: product.size,
+            itemImage: product.itemImage,
+        };
+        navigate('/cart', { state: { cartItem } });
+        // 기존 장바구니 상품 가져오기 (없으면 빈 배열)
+        let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // 새로운 상품 추가
+        cartItems.push(cartItem);
+        // 로컬 스토리지에 저장
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        // 장바구니 페이지로 이동
+        navigate('/cart');
+    };
 
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
@@ -250,7 +271,6 @@ export default function ItemPurchase() {
                                 title={product.name}
                             />
                                 )}
-                            <p>상품 ID: {productId}</p>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -273,7 +293,7 @@ export default function ItemPurchase() {
                                         },
                                     }}
                                 >
-                                    선택
+                                    수량
                                 </InputLabel>
                                 <Select
                                     labelId="option1-label"
@@ -332,7 +352,7 @@ export default function ItemPurchase() {
                                         },
                                     }}
                                 >
-                                    <MenuItem value={10}>흰색</MenuItem>
+                                    <MenuItem value={10}>흰색</MenuItem> // 같은 카테고리 , 사이즈
                                     <MenuItem value={20}>검정색</MenuItem>
                                     <MenuItem value={30}>파랑색</MenuItem>
                                 </Select>
@@ -375,6 +395,7 @@ export default function ItemPurchase() {
                                 </Select>
                             </FormControl>
                             <Grid container spacing={2} sx={{ mt: 2 }}>
+                                {/*구매하기 & 장바구니 버튼*/}
                                 <Grid item>
                                     <Button
                                         variant="contained"
@@ -383,6 +404,7 @@ export default function ItemPurchase() {
                                             color: 'white',
                                             '&:hover': { bgcolor: 'gray' },
                                         }}
+                                        onClick={handleAddToCart} // 장바구니 버튼 클릭 시 호출
                                     >
                                         구매하기
                                     </Button>
@@ -398,6 +420,7 @@ export default function ItemPurchase() {
                                                 color: 'gray',
                                             },
                                         }}
+                                        onClick={handleAddToCart} // 장바구니 버튼 클릭 시 호출
                                     >
                                         장바구니
                                     </Button>
