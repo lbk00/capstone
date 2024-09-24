@@ -9,6 +9,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 import './swiper.css';
+import { useNavigate } from "react-router-dom"; // 페이지 이동을 위한 useNavigate 훅
 import defaultImage from "./sample/sample1.jpg"; // 기본 이미지
 
 
@@ -52,7 +53,7 @@ import {
 } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 
-export default function App() {
+export default function HomeUser() {
     {/*메뉴 이벤트 관리*/}
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [anchorElProduct, setAnchorElProduct] = useState(null);
@@ -112,6 +113,7 @@ export default function App() {
     const [products, setProducts] = useState([]);
     const [currentPage, setCurrentPage] = useState(1); // 현재 페이지 번호
     const productsPerPage = 6; // 페이지당 상품 수
+    const navigate = useNavigate(); // 페이지 이동을 위한 useNavigate 선언
 
     // 데이터베이스에서 상품 데이터를 가져오는 함수
     useEffect(() => {
@@ -140,6 +142,12 @@ export default function App() {
     const handlePageChange = (event, value) => {
         setCurrentPage(value); // 페이지 번호 업데이트
     };
+
+    // 상품 클릭 시 상세 화면으로 이동
+    const handleCardClick = (productId) => {
+        navigate(`/itempurchase/${productId}`); // 상품 ID와 함께 구매 페이지로 이동
+    };
+
 
 
     {/*상품 메뉴 옆 Drawer*/}
@@ -335,14 +343,17 @@ export default function App() {
                 ) : (
                     currentProducts.map((product) => (
                         <Grid item xs={12} sm={6} md={4} key={product.id}>
-                            <Card>
+                            <Card
+                                onClick={() => handleCardClick(product.id)} // 클릭 시 페이지 이동
+                                sx={{ cursor: 'pointer' }} // 커서를 포인터로 변경
+                            >
                                 <CardContent>
                                     <CardMedia
                                         sx={{ height: 400 }}
                                         image={
                                             product.itemImage
                                                 ? `data:image/jpeg;base64,${product.itemImage}`
-                                                : defaultImage // 이미지가 없을 때 기본 이미지 경로
+                                                : defaultImage // 기본 이미지 사용
                                         }
                                         title={product.name}
                                     />
@@ -358,6 +369,7 @@ export default function App() {
                     ))
                 )}
             </Grid>
+
             {/*상품 이동 페이지네이션*/}
             <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
                 <Pagination
@@ -378,3 +390,4 @@ export default function App() {
         </div>
     );
 }
+

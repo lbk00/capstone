@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
@@ -7,6 +9,8 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import defaultImage from "./sample/sample1.jpg"; // 기본 이미지 설정
+
 import {
     Avatar,
     Box,
@@ -29,7 +33,7 @@ import {
     Select,
 } from '@mui/material';
 
-export default function App() {
+export default function ItemPurchase() {
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [anchorElProduct, setAnchorElProduct] = useState(null);
     const [anchorElOrdersheet, setAnchorElOrdersheet] = useState(null);
@@ -86,6 +90,26 @@ export default function App() {
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
+
+    // 상품 정보
+    const { productId } = useParams();
+    const [product, setProduct] = useState(null);
+
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            try {
+                const response = await axios.get(`http://localhost:8080/products/${productId}`);
+                setProduct(response.data); // 받아온 데이터를 product 상태에 저장
+            } catch (error) {
+                console.error("Error fetching product data:", error);
+            }
+        };
+        fetchProduct();
+    }, [productId]); // productId가 변경될 때마다 데이터를 가져온다
+
+
+
     const DrawerList = (
         <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
@@ -131,6 +155,11 @@ export default function App() {
     const handleOption3Change = (event) => {
         setOption3(event.target.value);
     };
+
+    // 상품이 로드되기 전에는 product가 null이므로 초기 상태를 설정. 데이터가 준비되기 전에 로딩메시지를 표시하도록
+    if (!product) {
+        return <p>상품을 불러오는 중입니다...</p>; // 데이터가 로드 중일 때
+    }
 
     return (
         <div className="App">
@@ -207,16 +236,21 @@ export default function App() {
                 <Grid item xs={12} sm={6} md={4}>
                     <Card>
                         <CardContent>
+                            {product && (
                             <CardMedia
                                 sx={{
                                     display: 'flex',
                                     justifyContent: 'center',
                                     alignItems: 'center',
                                     height: 500,
-                                    width: 500 }}
-                                image={require("./sample/sample1.jpg")}
-                                title="sample1"
+                                    width: 500
+                                }}
+
+                                image={product.itemImage ? `data:image/jpeg;base64,${product.itemImage}` : defaultImage}
+                                title={product.name}
                             />
+                                )}
+                            <p>상품 ID: {productId}</p>
                         </CardContent>
                     </Card>
                 </Grid>
@@ -224,10 +258,10 @@ export default function App() {
                     <Card>
                         <CardContent sx={{ height: 500, width: 400 }}>
                             <Typography gutterBottom variant="h5" component="div">
-                                상품이름
+                                {product.name}
                             </Typography>
                             <Typography variant="h6" color="text.secondary">
-                                ₩ 10000
+                                ₩ {product.price}
                             </Typography>
                             <FormControl fullWidth sx={{ mt: 2 }}>
                                 <InputLabel
