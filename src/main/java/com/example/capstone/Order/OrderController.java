@@ -18,10 +18,10 @@ public class OrderController {
 
     //장바구니 생성 api ( 고객이 상품 구입시, db에 따로 저장 X )
     @RequestMapping(value = "/purchase", method = RequestMethod.POST)
-    public ResponseEntity<OrderResponseDTO> purchase(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
-        //상품 번호 리스트로 입력 받고 , 해당 정보를 가지고있는 주문서 생성 (장바구니)
-        OrderResponseDTO orderResponseDto = ordersService.purchase(orderProductRequestDtos);
-        return ResponseEntity.ok(orderResponseDto);
+    public String purchase(@RequestBody List<OrderProductRequestDTO> orderProductRequestDtos) {
+        //상품 번호 리스트로 입력 받고 , order complete 출력
+        String str = ordersService.purchase(orderProductRequestDtos);
+        return str;
     }
 
     //주문서 생성 api

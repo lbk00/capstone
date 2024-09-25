@@ -31,20 +31,16 @@ public class OrderServiceImpl implements OrderService {
     //Response 주문서 생성 후 레포지토리에 저장
     @Transactional
     @Override
-    public OrderResponseDTO purchase(List<OrderProductRequestDTO> orderProductRequestDtos) {
+    public String purchase(List<OrderProductRequestDTO> orderProductRequestDtos) {
         //리스트로 받은 상품들의 id를 조회하여 주문서 생성
-
-        List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
-        decreaseProductAmount(orderedProducts);
+        //List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
+        decreaseProductAmount(orderProductRequestDtos);
         //requestDTO를 가지고 order 생성
         // 장바구니이므로 db에 따로 저장 X
-        /*
-        ordersRepository.save(order);
-        */
         // 주문서를 가지고 responseDTO 생성 후 반환
-        Order order = new Order(orderedProducts);
-        OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
-        return orderResponseDTO;
+        //Order order = new Order(orderedProducts);
+        //OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
+        return "order complete";
     }
 
     // 주문서 상태가 주문완료 -> 상품 수량 추가
@@ -74,22 +70,12 @@ public class OrderServiceImpl implements OrderService {
                     Integer orderedAmount = orderProductRequestDto.getAmount();
                     product.checkEnoughAmount(orderedAmount);
                     // 재고가 충분한지 확인
-
-                    //조회 후 Product 생성
-                    return new Product(
-                            product.getName(),
-                            product.getPrice(),
-                            orderedAmount,
-                            product.getOrder(),
-                            product.getSize(),
-                            product.getItemType(),
-                            product.getItemImage()
-                    );
+                    return product;
                 }).toList(); // 생성한 Product들로 리스트 생성
     }
 
     @Override
-    public void decreaseProductAmount(List<Product> orderedProducts) {
+    public void decreaseProductAmount(List<OrderProductRequestDTO> orderedProducts) {
         orderedProducts
                 .stream()
                 .forEach(orderedProduct -> {
