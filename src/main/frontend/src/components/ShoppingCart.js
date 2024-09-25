@@ -9,7 +9,9 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+
 import {
+    Alert,
     Avatar,
     Box,
     Card,
@@ -25,6 +27,7 @@ import {
     ListItemIcon,
     ListItemText,
     OutlinedInput,
+    Snackbar
 } from '@mui/material';
 
 
@@ -39,6 +42,7 @@ export default function ShoppingCart() {
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
     };
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
 
     // location.state에서 새로 전달된 cartItem을 가져옴
     useEffect(() => {
@@ -75,11 +79,15 @@ export default function ShoppingCart() {
             </List>
         </Box>
     );
+
     // 장바구니 초기화 함수
     const handleClearCart = () => {
         localStorage.removeItem('cartItems');  // 'cartItems' 키의 항목을 로컬 스토리지에서 삭제
         setCartItems([]);  // 상태를 빈 배열로 설정하여 UI에서도 장바구니가 비워짐
     };
+
+
+
     // 체크박스 변경 핸들러
     const handleCheckboxChange = (productId) => {
         setSelectedItems((prevSelectedItems) => {
@@ -96,6 +104,41 @@ export default function ShoppingCart() {
         setCartItems(updatedCartItems);
         setSelectedItems([]); // 선택 항목 초기화
         localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // 로컬 스토리지 업데이트
+    };
+
+    //장바구니 상품 구매 처리
+    const handlePurchase = async () => {
+        try {
+            // 선택된 상품 정보만 필터링
+            const purchaseData = cartItems
+                .filter(item => selectedItems.includes(item.id)) // 체크된 상품만 선택
+                .map(item => ({
+                    id: item.id,
+                    amount: item.amount // 수량도 여기서 가져오기
+                }));
+
+            if (purchaseData.length === 0) {
+                alert('구매할 상품을 선택해주세요.'); // 아무것도 선택되지 않았을 경우 알림
+                return;
+            }
+            // 3. POST 요청 보내기
+            const response = await axios.post('http://localhost:8080/orders/purchase', purchaseData);
+            console.log('구매가 완료되었습니다:', response.data);
+            setSnackbarOpen(true); // Snackbar 열기
+            // 장바구니에서 구매한 상품 제거
+            const updatedCartItems = cartItems.filter(item => !selectedItems.includes(item.id));
+            setCartItems(updatedCartItems);
+            localStorage.setItem('cartItems', JSON.stringify(updatedCartItems)); // 로컬 스토리지 업데이트
+            setSelectedItems((prev) => prev.filter(id => !selectedItems.includes(id)));
+
+        } catch (error) {
+            // 에러 처리
+            console.error('구매 중 오류가 발생했습니다:', error);
+        }
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
     };
 
 
@@ -215,6 +258,9 @@ export default function ShoppingCart() {
                             <Typography variant="h6" color="text.secondary">
                                 ₩ {product.price.toLocaleString()}원
                             </Typography>
+                            <Typography variant="h6" color="text.secondary">
+                                수량 {product.amount.toLocaleString()}
+                            </Typography>
                         </CardContent>
                         <Divider orientation="vertical" variant="middle" flexItem />
 
@@ -264,7 +310,28 @@ export default function ShoppingCart() {
                     onClick={handleDeleteSelected}>
                     선택된 항목 삭제
                 </Button>
+                <Button
+                    variant="contained"
+                    sx={{
+                        bgcolor: 'gray',
+                        color: 'white',
+                        '&:hover': { bgcolor: 'gray' },
+                    }}
+                    onClick={handlePurchase} // 구매하기
+                >구매하기</Button>
             </Box>
+            {/* Snackbar 컴포넌트 추가 */}
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleSnackbarClose}
+                //message="구매가 완료되었습니다."
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} // Snackbar 위치 설정
+            >
+                <Alert onClose={() => setSnackbarOpen(false)} severity="success">
+                    구매가 완료되었습니다.
+                </Alert>
+            </Snackbar>
             {/*하단과 여백을 위해 생성한 Box*/}
             <Box sx={{ bgcolor: '#ffffff' , height : 80 }}></Box>
             <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black', height: 50 }}>

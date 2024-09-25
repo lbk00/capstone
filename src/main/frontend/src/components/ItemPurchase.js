@@ -32,6 +32,9 @@ import {
     MenuItem,
     OutlinedInput,
     Select,
+    TextField,
+    Snackbar,
+    Alert
 } from '@mui/material';
 
 export default function ItemPurchase() {
@@ -40,6 +43,9 @@ export default function ItemPurchase() {
     const [anchorElOrdersheet, setAnchorElOrdersheet] = useState(null);
     const [anchorElInventory, setAnchorElInventory] = useState(null);
     const [anchorElSupplier, setAnchorElSupplier] = useState(null);
+
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const handleUserClick = (event) => {
         setAnchorElUser(event.currentTarget);
@@ -112,6 +118,22 @@ export default function ItemPurchase() {
     // 장바구니 페이지로 상품 ID 전송
     const navigate = useNavigate();
     const handleAddToCart = () => {
+        const parsedQuantity = parseInt(quantity, 10);
+
+        // 수량 검증
+        if (isNaN(parsedQuantity) || parsedQuantity <= 0) {
+            setSnackbarMessage("유효한 수량을 입력하세요.");
+            setOpenSnackbar(true);
+            return;
+        }
+
+        // 남은 수량 체크
+        if (parsedQuantity > product.amount) {
+            setSnackbarMessage("재고가 충분하지 않습니다.");
+            setOpenSnackbar(true);
+            return;
+        }
+
         // 장바구니 페이지로 product를 배열로 전달
         const cartItem = {
             id: product.id,
@@ -119,16 +141,28 @@ export default function ItemPurchase() {
             price: product.price,
             size: product.size,
             itemImage: product.itemImage,
+            amount: parseInt(quantity, 10),
         };
-        navigate('/cart', { state: { cartItem } });
+
         // 기존 장바구니 상품 가져오기 (없으면 빈 배열)
         let cartItems = JSON.parse(localStorage.getItem('cartItems')) || [];
-        // 새로운 상품 추가
-        cartItems.push(cartItem);
+        // 장바구니에 이미 있는지 확인
+        const existingItemIndex = cartItems.findIndex(item => item.id === product.id);
+
+        if (existingItemIndex > -1) {
+            // 이미 있는 경우, 수량 업데이트
+            cartItems[existingItemIndex].amount += cartItem.amount;
+
+        } else {
+            // 새로 추가
+            cartItems.push(cartItem);
+        }
         // 로컬 스토리지에 저장
         localStorage.setItem('cartItems', JSON.stringify(cartItems));
+        setSnackbarMessage("장바구니에 추가되었습니다.");
+        setOpenSnackbar(true);
         // 장바구니 페이지로 이동
-        navigate('/cart');
+        navigate('/cart', { state: { cartItem } });
     };
 
     const DrawerList = (
@@ -175,6 +209,16 @@ export default function ItemPurchase() {
 
     const handleOption3Change = (event) => {
         setOption3(event.target.value);
+    };
+
+    const [quantity, setQuantity] = useState(); // 기본 수량 설정
+
+    const handleQuantityChange = (event) => {
+        const value = event.target.value;
+        // 숫자만 입력받도록 설정 (0보다 작지 않도록)
+        if (value >= 0) {
+            setQuantity(value);
+        }
     };
 
     // 상품이 로드되기 전에는 product가 null이므로 초기 상태를 설정. 데이터가 준비되기 전에 로딩메시지를 표시하도록
@@ -283,25 +327,29 @@ export default function ItemPurchase() {
                             <Typography variant="h6" color="text.secondary">
                                 ₩ {product.price}
                             </Typography>
+                            <Typography variant="h6" color="text.secondary">
+                                남은 수량 : {product.amount}
+                            </Typography>
                             <FormControl fullWidth sx={{ mt: 2 }}>
                                 <InputLabel
-                                    id="option1-label"
+                                    htmlFor="quantity-input"
                                     sx={{
                                         color: 'gray',
                                         '&.Mui-focused': {
                                             color: 'gray',
                                         },
+                                        display: quantity ? 'none' : 'block',
                                     }}
                                 >
                                     수량
                                 </InputLabel>
-                                <Select
-                                    labelId="option1-label"
-                                    value={option1}
-                                    label="옵션1"
-                                    onChange={handleOption1Change}
+                                <TextField
+                                    id="quantity-input"
+                                    type="number" // 숫자만 입력 가능
+                                    value={quantity}
+                                    onChange={handleQuantityChange}
                                     sx={{
-                                        '& .MuiSelect-select': {
+                                        '& .MuiInputBase-input': {
                                             color: 'gray',
                                         },
                                         '& .MuiOutlinedInput-notchedOutline': {
@@ -313,12 +361,14 @@ export default function ItemPurchase() {
                                         '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
                                             borderColor: 'gray',
                                         },
+                                        '& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                            borderColor: 'gray', // 포커스 시 테두리 색상 회색
+                                        },
                                     }}
-                                >
-                                    <MenuItem value={10}>상품1</MenuItem>
-                                    <MenuItem value={20}>상품2</MenuItem>
-                                    <MenuItem value={30}>상품3</MenuItem>
-                                </Select>
+                                    InputProps={{
+                                        onFocus: (e) => e.target.select(), // 숫자 입력 시 포커스될 때 전체 선택
+                                    }}
+                                />
                             </FormControl>
                             <FormControl fullWidth sx={{ mt: 2 }}>
                                 <InputLabel
@@ -430,6 +480,17 @@ export default function ItemPurchase() {
                     </Card>
                 </Grid>
             </Grid>
+            <Snackbar
+                open={openSnackbar}
+                autoHideDuration={6000}
+                //message={"재고가 부족합니다."}
+                onClose={() => setOpenSnackbar(false)}
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }} // Snackbar 위치 설정
+            >
+                <Alert onClose={() => setOpenSnackbar(false)} severity="warning">
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             {/*하단과 여백을 위해 생성한 Box*/}
             <Box sx={{ bgcolor: '#ffffff' , height : 80 }}></Box>
             <AppBar position="static" sx={{ bgcolor: 'gray', color: 'black', height: 50 }}>
