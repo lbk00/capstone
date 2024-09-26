@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 import lombok.extern.log4j.Log4j2;
 
 import java.util.List;
-import static org.hibernate.query.sqm.tree.SqmNode.log;
 
 @Log4j2
 public class SupplierSearchImpl extends QuerydslRepositorySupport implements SupplierSearch{

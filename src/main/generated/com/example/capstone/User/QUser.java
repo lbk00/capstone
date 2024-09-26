@@ -1,0 +1,51 @@
+package com.example.capstone.User;
+
+import static com.querydsl.core.types.PathMetadataFactory.*;
+
+import com.querydsl.core.types.dsl.*;
+
+import com.querydsl.core.types.PathMetadata;
+import javax.annotation.processing.Generated;
+import com.querydsl.core.types.Path;
+
+
+/**
+ * QUser is a Querydsl query type for User
+ */
+@Generated("com.querydsl.codegen.DefaultEntitySerializer")
+public class QUser extends EntityPathBase<User> {
+
+    private static final long serialVersionUID = 700195652L;
+
+    public static final QUser user = new QUser("user");
+
+    public final DateTimePath<java.util.Date> cbirthDate = createDateTime("cbirthDate", java.util.Date.class);
+
+    public final StringPath cEmail = createString("cEmail");
+
+    public final ComparablePath<Character> cGender = createComparable("cGender", Character.class);
+
+    public final StringPath cID = createString("cID");
+
+    public final StringPath cName = createString("cName");
+
+    public final StringPath cPW = createString("cPW");
+
+    public final StringPath ctel = createString("ctel");
+
+    public final NumberPath<Long> userId = createNumber("userId", Long.class);
+
+    public QUser(String variable) {
+        super(User.class, forVariable(variable));
+    }
+
+    public QUser(Path<? extends User> path) {
+        super(path.getType(), path.getMetadata());
+    }
+
+    public QUser(PathMetadata metadata) {
+        super(User.class, metadata);
+    }
+
+}
+

@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport
 
 import java.util.List;
 
-import static org.hibernate.query.sqm.tree.SqmNode.log;
 @Log4j2
 public class ManagerSearchImpl extends QuerydslRepositorySupport implements ManagerSearch{
 
