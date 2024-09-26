@@ -28,18 +28,46 @@ public class OrderServiceImpl implements OrderService {
     }
 
     // Business methods for Orders
-    //Response 주문서 생성 후 레포지토리에 저장
+    // 상품이 구매가 진행된 후, 수요예측 수행
     @Transactional
     @Override
     public String purchase(List<OrderProductRequestDTO> orderProductRequestDtos) {
-        //리스트로 받은 상품들의 id를 조회하여 주문서 생성
-        //List<Product> orderedProducts = makeOrderedProducts(orderProductRequestDtos);
+
+        // 현재는 반환값 void -> 수요예측 입력값을 저장하기위해 id, 수량 정보가 있는 List<OrderProductRequestDTO>로 수정해줘야함
+        // or 구매한 뒤의 상품 수량을 넘겨준다 List<OrderProductRequestDTO>의 id를 조회하여 amount를 구하고 서로 빼주면됨
+
         decreaseProductAmount(orderProductRequestDtos);
-        //requestDTO를 가지고 order 생성
+
+        // 구매한 상품의 id와 현재 재고수량
+        orderProductRequestDtos.forEach(orderProduct -> {
+            Long id = orderProduct.getId();
+            Product findProduct = productRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Product not found: " + id));
+
+            Integer amount = findProduct.getAmount();
+            // 주문 진행 후 상품 수량 가져옴
+            System.out.println("Product ID: " + id + ", Amount: " + amount);
+
+            // 예: id와 amount를 가지고 추가 처리
+        });
         // 장바구니이므로 db에 따로 저장 X
-        // 주문서를 가지고 responseDTO 생성 후 반환
-        //Order order = new Order(orderedProducts);
-        //OrderResponseDTO orderResponseDTO = OrderResponseDTO.toDTO(order);
+        // 구매 진행 후 상품의 수량이 변경되었으므로 수요예측 모델 호출
+        // DB에 있는 상품 수량이 변경되면( 고객이 상품을 주문하면 / 상품의 총 수량이 감소되면) -> 예측 수행
+        // 여러건의 주문시 입력데이터가 누적되도록
+        // 입력데이터로 얻고자하는 출력데이터 -> 해당 상품의 다음날(일주일간) 수요량만큼 추가 주문
+
+
+        /*
+        String modelPath = "path_to_your_model/saved_model"; // 모델 저장된 위치
+        // 1. 상품의 수량이 변경되었으면
+
+        // 2. 수요예측 수행
+        try (SavedModelBundle model = SavedModelBundle.load(modelPath, "serve")) {
+
+        }
+        */
+
+
         return "order complete";
     }
 
