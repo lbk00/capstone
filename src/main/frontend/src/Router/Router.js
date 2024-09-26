@@ -8,6 +8,7 @@ const Router = () => {
   const ManagerRead = lazy(() => import("../components/Manager/ReadPage"))
   const ManagerAdd = lazy(() => import("../components/Manager/AddPage"))
   const ManagerModify = lazy(() => import("../components/Manager/ModifyPage"))
+  const AddPage = lazy(() => import("../components/Manager/AddPage"));
   return [
    {
      path: "list", element: <Suspense fallback={Loading}><ManagerList/></Suspense>

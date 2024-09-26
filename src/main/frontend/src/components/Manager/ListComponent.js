@@ -9,9 +9,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-import PageComponent from "./PageComponent";
 import ReadComponent from './ReadComponent';
 import { useNavigate } from 'react-router-dom';
+import PageComponent from "../common/PageComponent";
 
 
 const initState = {

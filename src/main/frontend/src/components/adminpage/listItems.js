@@ -17,6 +17,7 @@ import Divider from '@mui/material/Divider';
 import Box from '@mui/material/Box';
 import Inventory from '@mui/icons-material/Inventory'; // Added this line
 import Store from '@mui/icons-material/Store'; // Added this line
+import { Link } from 'react-router-dom';
 
 export const MainListItems = () => {
   const [openOrder, setOpenOrder] = React.useState(false);
@@ -118,21 +119,19 @@ export const MainListItems = () => {
             </ListItemButton>
             <Collapse in={openUser} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton sx={{ pl: 4 }} component={Link} to="/list">
                   <ListItemText primary="사용자 목록" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton sx={{ pl: 4 }} component={Link} to="/add">
                   <ListItemText primary="사용자 등록" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton sx={{ pl: 4 }} component={Link} to="/modify/1">
                   <ListItemText primary="사용자 수정" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
+                <ListItemButton sx={{ pl: 4 }} component={Link} to="/modify/1">
                   <ListItemText primary="사용자 삭제" />
                 </ListItemButton>
-                <ListItemButton sx={{ pl: 4 }}>
-                  <ListItemText primary="사용자 검색" />
-                </ListItemButton>
+
               </List>
             </Collapse>
 

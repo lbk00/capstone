@@ -24,12 +24,15 @@ import { Routes, Route } from 'react-router-dom';
 import ListComponent from '../Manager/ListComponent';
 import ReadComponent from '../Manager/ReadComponent';
 import useCustomMove from '../../hooks/useCustomMove';
+import { Outlet } from 'react-router-dom';
 
 
 import Deposits from './Deposits';
 import Avatar from '@mui/material/Avatar';
 import ManagerRead from '../Manager/ReadPage';
 import ManagerList from '../Manager/ListPage';
+import AddPage from '../Manager/AddPage'; // AddPage 컴포넌트를 import 합니다.
+import ListPage from '../Manager/ListPage'; // ListPage 컴포넌트를 import 합니다.
 
 
 function Copyright(props) {
@@ -222,8 +225,11 @@ export default function Dashboard() {
 
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                  <ListComponent onRowClick={handleRowClick} />
-
+                  <Routes>
+                    <Route path="/add" element={<AddPage />} />
+                    <Route path="/list" element={<ListPage />} />
+                    <Route path="*" element={<Outlet />} />
+                  </Routes>
                 </Paper>
               </Grid>
             </Grid>
