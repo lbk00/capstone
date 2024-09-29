@@ -62,7 +62,7 @@ jobs:
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: java-app
+          name: final
       
       - name: Login to Azure
         uses: azure/login@v2
