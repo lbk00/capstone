@@ -34,6 +34,10 @@ jobs:
         run: npm install
         working-directory: ./src/main/frontend
 
+      - name: Build React app
+        run: npm run build
+        working-directory: ./src/main/frontend
+
       - name: Grant execute permission to react-scripts
         run: chmod +x ./node_modules/.bin/react-scripts
         working-directory: ./src/main/frontend
@@ -49,6 +53,12 @@ jobs:
           name: final
           path: '${{ github.workspace }}/build/libs/*.jar'
 
+      - name: Upload React build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: react-build
+          path: './src/main/frontend/build'  # React 빌드된 파일 경로
+
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -59,10 +69,15 @@ jobs:
       id-token: write #This is required for requesting the JWT
   
     steps:
-      - name: Download artifact from build job
+      - name: Download JAR artifact from build job
         uses: actions/download-artifact@v4
         with:
           name: final
+
+      - name: Download React build artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: react-build
       
       - name: List files in current directory
         run: ls -al  # 현재 디렉토리의 파일 목록 확인
@@ -74,13 +89,22 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_2D284AE502BD4E1BB5DB0E404BC9901B }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_E909E9BB73DD496588C34243BDF5C245 }}
 
-      - name: Deploy to Azure Web App
+      - name: Deploy JAR to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'capstone'
           slot-name: 'Production'
-          package: 'capstone-0.0.1-SNAPSHOT.jar'  # 현재 디렉토리에서 JAR 파일의 이름만 지정
+          package: 'capstone-0.0.1-SNAPSHOT.jar'
+
+      - name: Deploy React build to Azure Web App
+        id: deploy-react
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'capstone'  # 같은 웹 앱에 배포
+          slot-name: 'Production'
+          package: './build'  # React 빌드된 파일 경로
+
 
 
           
