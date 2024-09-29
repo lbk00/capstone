@@ -79,6 +79,9 @@ jobs:
       
       - name: List files in current directory
         run: ls -al  # 현재 디렉토리의 파일 목록 확인
+
+      - name: List files in React build directory
+        run: ls -al ./src/main/frontend/build  # React 빌드된 파일 경로 확인
       
       - name: Login to Azure
         uses: azure/login@v2
