@@ -39,6 +39,12 @@ jobs:
         run: npm run build
         working-directory: ./src/main/frontend
 
+      - name: Upload React build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend
+          path: './src/main/frontend/build'  # React 빌드된 파일 경로
+
       - name: Grant execute permission to gradlew
         run: chmod +x ./gradlew
 
@@ -58,7 +64,7 @@ jobs:
       name: 'Production'
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # This is required for requesting the JWT
   
     steps:
       - name: Download JAR artifact from build job
@@ -69,7 +75,7 @@ jobs:
       - name: Download React build artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: react-build
+          name: frontend
       
       - name: List files in current directory
         run: ls -al  # 현재 디렉토리의 파일 목록 확인
@@ -96,6 +102,7 @@ jobs:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
           package: './build'  # React 빌드된 파일 경로
+
 
 
 
