@@ -101,7 +101,7 @@ jobs:
         with:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
-          package: './build'  # React 빌드된 파일 경로
+          package: './src/main/frontend/build'  # React 빌드된 파일 경로
 
 
 
