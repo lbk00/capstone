@@ -22,9 +22,6 @@ jobs:
           java-version: '17'
           distribution: 'microsoft'
 
-      - name: Grant execute permission to gradlew
-        run: chmod +x ./gradlew
-
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
@@ -34,30 +31,25 @@ jobs:
         run: npm install
         working-directory: ./src/main/frontend
 
+      - name: Grant execute permission to react-scripts
+        run: chmod +x ./node_modules/.bin/react-scripts
+        working-directory: ./src/main/frontend
+
       - name: Build React app
         run: npm run build
         working-directory: ./src/main/frontend
 
-      - name: Grant execute permission to react-scripts
-        run: chmod +x ./node_modules/.bin/react-scripts
-        working-directory: ./src/main/frontend
-        
+      - name: Grant execute permission to gradlew
+        run: chmod +x ./gradlew
 
       - name: Build with Gradle
         run: ./gradlew build
-    
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:
           name: final
           path: '${{ github.workspace }}/build/libs/*.jar'
-
-      - name: Upload React build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: react-build
-          path: './src/main/frontend/build'  # React 빌드된 파일 경로
 
   deploy:
     runs-on: ubuntu-latest
@@ -104,6 +96,7 @@ jobs:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
           package: './build'  # React 빌드된 파일 경로
+
 
 
 
