@@ -24,11 +24,11 @@ jobs:
 
       - name: Grant execute permission to gradlew
         run: chmod +x ./gradlew
-        working-directory: C:\FCJAVA\capstone-develop\gradlew
+        working-directory: ./FCJAVA/capstone-develop
 
       - name: Build with Gradle
         run: ./gradlew build
-        working-directory: C:\FCJAVA\capstone-develop\gradlew
+        working-directory: ./FCJAVA/capstone-develop
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
