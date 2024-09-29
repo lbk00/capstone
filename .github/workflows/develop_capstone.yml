@@ -80,6 +80,7 @@ jobs:
         with:
           app-name: 'capstone'
           slot-name: 'Production'
-          package: 'final-0.0.1-SNAPSHOT.jar' 
+          package: './final-0.0.1-SNAPSHOT.jar'  # 현재 디렉토리에서 JAR 파일의 이름만 지정
+
 
           
