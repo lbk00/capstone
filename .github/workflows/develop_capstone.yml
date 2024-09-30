@@ -45,6 +45,9 @@ jobs:
           name: frontend
           path: './src/main/frontend/build'  # React 빌드된 파일 경로
 
+      - name: List files in build directory
+        run: ls -al ./src/main/frontend/build    
+
       - name: Grant execute permission to gradlew
         run: chmod +x ./gradlew
 
