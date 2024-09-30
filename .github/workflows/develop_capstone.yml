@@ -97,8 +97,7 @@ jobs:
           slot-name: 'Production'
           package: 'capstone-0.0.1-SNAPSHOT.jar'
 
-      - name: List files in build directory
-        run: ls -al ./src/main/frontend/build
+      
 
       - name: Deploy React build to Azure Web App
         id: deploy-react
