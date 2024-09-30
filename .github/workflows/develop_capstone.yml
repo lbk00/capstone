@@ -108,7 +108,7 @@ jobs:
         with:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
-          package: '${{ github.workspace }}/src/main/frontend/build'  # 수정된 React 빌드된 파일 경로
+          package: './'  # 수정된 React 빌드된 파일 경로
 
 
 
