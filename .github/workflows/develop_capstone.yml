@@ -97,13 +97,17 @@ jobs:
           slot-name: 'Production'
           package: 'capstone-0.0.1-SNAPSHOT.jar'
 
+      - name: List files in build directory
+        run: ls -al ./src/main/frontend/build
+
       - name: Deploy React build to Azure Web App
         id: deploy-react
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
-          package: './src/main/frontend/build'  # React 빌드된 파일 경로
+          package: '${{ github.workspace }}/src/main/frontend/build'  # 수정된 React 빌드된 파일 경로
+
 
 
 
