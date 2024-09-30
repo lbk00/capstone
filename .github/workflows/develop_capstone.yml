@@ -43,7 +43,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend
-          path: '/src/main/frontend/build'  # React 빌드된 파일 경로
+          path: './src/main/frontend/build'  # React 빌드된 파일 경로
 
       - name: Grant execute permission to gradlew
         run: chmod +x ./gradlew
@@ -103,7 +103,7 @@ jobs:
         with:
           app-name: 'capstone'  # 같은 웹 앱에 배포
           slot-name: 'Production'
-          package: 'src/main/frontend/build'  # React 빌드된 파일 경로
+          package: './src/main/frontend/build'  # React 빌드된 파일 경로
 
 
 
